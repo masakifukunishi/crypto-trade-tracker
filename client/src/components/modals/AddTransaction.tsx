@@ -38,7 +38,7 @@ const AddTransaction: React.FC = () => {
     >
       <div className="w-95% max-w-sm m-auto bg-gray-800 rounded-lg">
         <div className="flex items-center justify-between h-10 border-b px-3">
-          <div>Add Trading</div>
+          <div className="font-bold">Add Trading</div>
           <FontAwesomeIcon icon={faXmark} size="lg" className="cursor-pointer" onClick={() => dispatch(close())} />
         </div>
         <form className="mx-7" onSubmit={handleSubmit}>
