@@ -1,1 +1,1 @@
-export const ADD_TRANSACTION = "add-transaction";
+export const ADD_TRADING = "add-trading";

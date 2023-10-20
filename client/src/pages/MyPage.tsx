@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/header";
-import AddTransactionModal from "../components/modals/AddTransaction";
+import AddTradingModal from "../components/modals/AddTrading";
 import { login, logout } from "../utils/auth";
 import { selectOpenedModal, open } from "../store/slicers/openedModal";
-import { ADD_TRANSACTION } from "../consts/modal";
+import { ADD_TRADING } from "../consts/modal";
 import useAuth from "../hooks/useAuth";
 
 const MyPage: React.FC = () => {
@@ -24,7 +24,7 @@ const MyPage: React.FC = () => {
             <button
               className="bg-blue-500 rounded-lg p-2"
               onClick={() => {
-                dispatch(open({ type: ADD_TRANSACTION }));
+                dispatch(open({ type: ADD_TRADING }));
               }}
             >
               Add trading
@@ -33,7 +33,7 @@ const MyPage: React.FC = () => {
           <button onClick={login}>Login</button>
         </>
       )}
-      {openedModal.type === ADD_TRANSACTION && <AddTransactionModal />}
+      {openedModal.type === ADD_TRADING && <AddTradingModal />}
     </div>
   );
 };

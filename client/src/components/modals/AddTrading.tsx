@@ -7,14 +7,14 @@ import { close } from "../../store/slicers/openedModal";
 import InputText from "../forms/InputText";
 import SelectBox from "../forms/SelectBox";
 
-const AddTransaction: React.FC = () => {
+const AddTrading: React.FC = () => {
   const dispatch = useDispatch();
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [date, setDate] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
-  const [transactionType, setTransactionType] = useState<number>(0);
-  const [errors, setErrors] = useState({ date: [], quantity: [], price: [], transactionType: [] });
+  const [tradingType, setTradingType] = useState<number>(0);
+  const [errors, setErrors] = useState({ date: [], quantity: [], price: [], tradingType: [] });
 
   const handleChangeQuantity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -66,16 +66,16 @@ const AddTransaction: React.FC = () => {
           </div>
           <div className="mt-5">
             <SelectBox
-              id="transactionType"
-              label="Transaction Type"
+              id="tradingType"
+              label="Trading Type"
               isRequired={true}
-              state={transactionType}
+              state={tradingType}
               options={[
                 { value: 1, label: "Buy" },
                 { value: 2, label: "Sell" },
               ]}
-              errors={errors.transactionType}
-              handleChange={(e) => setTransactionType(parseInt(e.target.value))}
+              errors={errors.tradingType}
+              handleChange={(e) => setTradingType(parseInt(e.target.value))}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">
@@ -92,4 +92,4 @@ const AddTransaction: React.FC = () => {
   );
 };
 
-export default AddTransaction;
+export default AddTrading;
