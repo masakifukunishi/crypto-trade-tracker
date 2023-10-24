@@ -1,6 +1,5 @@
 import path from "path";
 import express, { Express, Request, Response, NextFunction } from "express";
-import * as admin from "firebase-admin";
 
 import apiRoutes from "./api-routes/index.js";
 import firebaseAuthMiddleware from "./middleware/firebaseAuth.js";
@@ -13,7 +12,7 @@ const port: number = Number(process.env.PORT) || 8080;
 process.env.TZ = "UTC";
 
 // connect to MongoDB
-// await db.connect();
+await db.connect();
 
 app.use(express.static("../client/dist"));
 

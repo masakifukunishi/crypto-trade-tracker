@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -19,19 +19,15 @@ const AddTrading: React.FC = () => {
   const [type, setType] = useState<number>(0);
   const [errors, setErrors] = useState({ date: [], quantity: [], price: [], type: [] });
 
-  const handleChangeQuantity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
-    if (value >= 0) setQuantity(value);
-  }, []);
-
-  const handleChangePrice = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (value >= 0) setPrice(value);
-  }, []);
+    if (value >= 0) setValue(value);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    tradingApi.add(user.token, { date, quantity, price, type });
+    const response = await tradingApi.add(user.token, { date, quantity, price, type });
+    console.log(response);
   };
 
   return (
@@ -55,7 +51,7 @@ const AddTrading: React.FC = () => {
               isNumber={true}
               state={quantity}
               errors={errors.quantity}
-              handleChange={handleChangeQuantity}
+              handleChange={(e) => handleInputNumberChange(e, setQuantity)}
             />
           </div>
           <div className="mt-5">
@@ -66,7 +62,7 @@ const AddTrading: React.FC = () => {
               isNumber={true}
               state={price}
               errors={errors.price}
-              handleChange={handleChangePrice}
+              handleChange={(e) => handleInputNumberChange(e, setPrice)}
             />
           </div>
           <div className="mt-5">
@@ -81,6 +77,16 @@ const AddTrading: React.FC = () => {
               ]}
               errors={errors.type}
               handleChange={(e) => setType(parseInt(e.target.value))}
+            />
+          </div>
+          <div className="mt-5">
+            <InputText
+              id="date"
+              label="Date"
+              isRequired={true}
+              state={date}
+              errors={errors.date}
+              handleChange={(e) => setDate(e.target.value)}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">
