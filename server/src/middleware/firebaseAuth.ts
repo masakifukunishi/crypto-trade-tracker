@@ -19,13 +19,13 @@ admin.initializeApp({
 });
 
 const firebaseAuthMiddleware = async (req: any, res: Response, next: NextFunction) => {
-  console.log("firebaseAuthMiddleware");
   const token = req.headers.authorization?.split("Bearer ")[1];
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
+    console.log("token", token);
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;
     console.log("decodedToken", decodedToken);
