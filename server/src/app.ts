@@ -1,7 +1,9 @@
 import path from "path";
 import express, { Express, Request, Response, NextFunction } from "express";
+import * as admin from "firebase-admin";
 
 import apiRoutes from "./api-routes/index.js";
+import firebaseAuthMiddleware from "./middleware/firebaseAuth.js";
 import db from "./helpers/mongodb.js";
 
 const app: Express = express();
@@ -17,6 +19,7 @@ app.use(express.static("../client/dist"));
 
 app.use(express.json());
 
+app.use(firebaseAuthMiddleware);
 app.use("/api", apiRoutes);
 
 app.get("*", (_req: Request, res: Response) => {

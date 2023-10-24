@@ -16,8 +16,8 @@ const AddTrading: React.FC = () => {
   const [date, setDate] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
-  const [tradingType, setTradingType] = useState<number>(0);
-  const [errors, setErrors] = useState({ date: [], quantity: [], price: [], tradingType: [] });
+  const [type, setType] = useState<number>(0);
+  const [errors, setErrors] = useState({ date: [], quantity: [], price: [], type: [] });
 
   const handleChangeQuantity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -31,7 +31,7 @@ const AddTrading: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    tradingApi.add(user.uid, { date, quantity, price, tradingType });
+    tradingApi.add(user.token, { date, quantity, price, type });
   };
 
   return (
@@ -71,16 +71,16 @@ const AddTrading: React.FC = () => {
           </div>
           <div className="mt-5">
             <SelectBox
-              id="tradingType"
+              id="type"
               label="Trading Type"
               isRequired={true}
-              state={tradingType}
+              state={type}
               options={[
                 { value: 1, label: "Buy" },
                 { value: 2, label: "Sell" },
               ]}
-              errors={errors.tradingType}
-              handleChange={(e) => setTradingType(parseInt(e.target.value))}
+              errors={errors.type}
+              handleChange={(e) => setType(parseInt(e.target.value))}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">

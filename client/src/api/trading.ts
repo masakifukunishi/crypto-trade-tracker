@@ -1,18 +1,16 @@
-import axios from "axios";
-
 import { setupAxiosInterceptors } from "./libs/axiosInterceptors";
+import { makeAuthenticatedRequest } from "./libs/requestHelper";
 
 setupAxiosInterceptors();
 
 const ENDPOINT_URL = "/api/trading";
 
 const tradingApi = {
-  async add(userId: string, data: any) {
-    const result = await axios.post(ENDPOINT_URL, {
-      userId: userId,
-      data: data,
-    });
-    return result.data;
+  async add(token: string, data: object) {
+    return await makeAuthenticatedRequest(ENDPOINT_URL, "post", data, token);
+  },
+  async edit(token: string, data: object) {
+    return await makeAuthenticatedRequest(ENDPOINT_URL, "put", data, token);
   },
 };
 
