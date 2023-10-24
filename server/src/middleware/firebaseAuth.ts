@@ -33,10 +33,13 @@ const firebaseAuthMiddleware = async (req: Request, res: Response, next: NextFun
   }
 
   try {
+    console.log(111);
     const decodedToken = await admin.auth().verifyIdToken(token);
+    console.log(decodedToken);
     req.user = decodedToken;
     next();
   } catch (error) {
+    console.log(error);
     return res.status(401).json({ message: "Unauthorized" });
   }
 };

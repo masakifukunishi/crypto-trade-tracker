@@ -9,14 +9,11 @@ export const makeAuthenticatedRequest = async (endPoint: string, method: string,
         ...data,
       },
       headers: {
-        Authorization: `Bearer ${token}a`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    console.log("success");
     return result.data;
   } catch (error) {
-    console.log(error);
-    console.log("failed");
-    return error;
+    throw error;
   }
 };

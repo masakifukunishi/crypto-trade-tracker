@@ -8,6 +8,7 @@ import InputText from "../forms/InputText";
 import SelectBox from "../forms/SelectBox";
 import tradingApi from "../../api/trading";
 import useAuth from "../../hooks/useAuth";
+import { useErrorHandling } from "../../hooks/useErrorHandling";
 
 const AddTrading: React.FC = () => {
   const user = useAuth();
@@ -17,7 +18,7 @@ const AddTrading: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [type, setType] = useState<number>(0);
-  const [errors, setErrors] = useState({ date: [], quantity: [], price: [], type: [] });
+  const { errors, handleErrors } = useErrorHandling({ date: [], quantity: [], price: [], type: [] });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
@@ -26,7 +27,11 @@ const AddTrading: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await tradingApi.add(user.token, { date, quantity, price, type });
+    try {
+      const response = await tradingApi.add(user.token, { date, quantity, price, type });
+    } catch (error) {
+      handleErrors(error);
+    }
   };
 
   return (
