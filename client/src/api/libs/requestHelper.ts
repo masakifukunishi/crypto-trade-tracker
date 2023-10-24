@@ -5,7 +5,7 @@ export const makeAuthenticatedRequest = async (endPoint: string, method: string,
     method: method,
     url: endPoint,
     data: {
-      data: data,
+      ...data,
     },
     headers: {
       Authorization: `Bearer ${token}`,

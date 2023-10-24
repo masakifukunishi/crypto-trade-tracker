@@ -18,17 +18,23 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-const firebaseAuthMiddleware = async (req: any, res: Response, next: NextFunction) => {
+declare global {
+  namespace Express {
+    interface Request {
+      user: admin.auth.DecodedIdToken;
+    }
+  }
+}
+
+const firebaseAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split("Bearer ")[1];
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
-    console.log("token", token);
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;
-    console.log("decodedToken", decodedToken);
     next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized" });
