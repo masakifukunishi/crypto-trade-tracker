@@ -6,8 +6,11 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { close } from "../../store/slicers/openedModal";
 import InputText from "../forms/InputText";
 import SelectBox from "../forms/SelectBox";
+import tradingApi from "../../api/trading";
+import useAuth from "../../hooks/useAuth";
 
 const AddTrading: React.FC = () => {
+  const user = useAuth();
   const dispatch = useDispatch();
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [date, setDate] = useState<string>("");
@@ -18,15 +21,17 @@ const AddTrading: React.FC = () => {
 
   const handleChangeQuantity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
-    console.log(value);
     if (value >= 0) setQuantity(value);
   }, []);
+
   const handleChangePrice = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (value >= 0) setPrice(value);
   }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    tradingApi.add(user.uid, { date, quantity, price, tradingType });
   };
 
   return (

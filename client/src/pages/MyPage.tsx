@@ -16,10 +16,6 @@ const MyPage: React.FC = () => {
       <Header />
       {user ? (
         <>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <>
           <div>
             <button
               className="bg-blue-500 rounded-lg p-2"
@@ -30,6 +26,10 @@ const MyPage: React.FC = () => {
               Add trading
             </button>
           </div>
+          <button onClick={logout}>Logout</button>
+        </>
+      ) : (
+        <>
           <button onClick={login}>Login</button>
         </>
       )}
