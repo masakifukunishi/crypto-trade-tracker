@@ -31,7 +31,7 @@ const AddTrading: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    tradingApi.add(user.uid, { date, quantity, price, tradingType });
+    tradingApi.add(user, { date, quantity, price, tradingType });
   };
 
   return (

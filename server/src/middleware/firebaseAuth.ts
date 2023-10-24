@@ -1,0 +1,38 @@
+import admin from "firebase-admin";
+import config from "../config/index.js";
+import { Request, Response, NextFunction } from "express";
+
+const serviceAccount: any = {
+  project_id: config.FIREBASE_PROJECT_ID,
+  private_key_id: config.FIREBASE_PRIVATE_KEY_ID,
+  private_key: config.FIREBASE_PRIVATE_KEY,
+  client_email: config.FIREBASE_CLIENT_EMAIL,
+  client_id: config.FIREBASE_CLIENT_ID,
+  auth_uri: config.FIREBASE_AUTH_URI,
+  token_uri: config.FIREBASE_TOKEN_URI,
+  auth_provider_x509_cert_url: config.FIREBASE_AUTH_CERT_URL,
+  client_x509_cert_url: config.FIREBASE_CLIENT_CERT_URL,
+};
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const firebaseAuthMiddleware = async (req: any, res: Response, next: NextFunction) => {
+  console.log("firebaseAuthMiddleware");
+  const token = req.headers.authorization?.split("Bearer ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    req.user = decodedToken;
+    console.log("decodedToken", decodedToken);
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
+export default firebaseAuthMiddleware;
