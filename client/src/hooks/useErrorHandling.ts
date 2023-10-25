@@ -1,15 +1,26 @@
-import { set } from "firebase/database";
 import { useState } from "react";
 
-export const useErrorHandling = (initialErrors: any) => {
+interface ValidationError {
+  type: "field";
+  value: number;
+  msg: string;
+  path: string;
+  location: string;
+}
+
+interface InitialErrors {
+  [key: string]: string[];
+}
+
+export const useErrorHandling = (initialErrors: InitialErrors) => {
   const [errors, setErrors] = useState(initialErrors);
 
-  const handleErrors = (respErrors: any) => {
+  const handleErrors = (ValidationErrors: ValidationError[]) => {
     setErrors(initialErrors);
-    respErrors.forEach((respError: any) => {
-      const key = respError.path;
-      const value = respError.msg;
-      setErrors((prev: any) => ({ ...prev, [key]: [...prev[key], value] }));
+    ValidationErrors.forEach((ValidationError) => {
+      const key = ValidationError.path;
+      const value = ValidationError.msg;
+      setErrors((prev) => ({ ...prev, [key]: [...prev[key], value] }));
     });
   };
 

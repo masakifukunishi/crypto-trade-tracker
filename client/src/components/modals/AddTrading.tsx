@@ -27,7 +27,7 @@ const AddTrading: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await tradingApi.add(user.token, { date, quantity, price, type });
+      await tradingApi.add(user.token, { date, quantity, price, type });
       dispatch(close());
     } catch (error) {
       handleErrors(error);
