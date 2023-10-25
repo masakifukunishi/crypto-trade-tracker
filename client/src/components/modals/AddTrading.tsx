@@ -13,7 +13,6 @@ import { useErrorHandling } from "../../hooks/useErrorHandling";
 const AddTrading: React.FC = () => {
   const user = useAuth();
   const dispatch = useDispatch();
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [date, setDate] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
@@ -29,6 +28,7 @@ const AddTrading: React.FC = () => {
     e.preventDefault();
     try {
       const response = await tradingApi.add(user.token, { date, quantity, price, type });
+      dispatch(close());
     } catch (error) {
       handleErrors(error);
     }
@@ -97,7 +97,7 @@ const AddTrading: React.FC = () => {
             <button type="button" className="rounded-md border border-gray-50 w-16 mr-2" onClick={() => dispatch(close())}>
               Cancel
             </button>
-            <button type="submit" className="bg-blue-600 rounded-md border border-blue-400 w-16" disabled={isProcessing}>
+            <button type="submit" className="bg-blue-600 rounded-md border border-blue-400 w-16">
               Save
             </button>
           </div>

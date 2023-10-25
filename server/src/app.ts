@@ -12,7 +12,7 @@ const port: number = Number(process.env.PORT) || 8080;
 process.env.TZ = "UTC";
 
 // connect to MongoDB
-// await db.connect();
+await db.connect();
 
 app.use(express.static("../client/dist"));
 
@@ -31,7 +31,6 @@ app.get("*", (_req: Request, res: Response) => {
 // as an Express error-handling middleware.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction): void => {
-  console.error(err.stack);
   res.status(500).json({ msg: "Internal Server Error" });
 });
 

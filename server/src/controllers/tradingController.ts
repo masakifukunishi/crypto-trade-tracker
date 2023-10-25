@@ -9,8 +9,8 @@ export const addTrading = async (req: Request, res: Response): Promise<void> => 
   const userId = user?.uid;
 
   try {
-    // const newTrading = await tradingService.addTrading(userId, date, quantity, price, type);
-    res.status(201).json({ test: "test" });
+    const newTrading = await tradingService.addTrading(userId, date, quantity, price, type);
+    res.status(201).json(newTrading);
   } catch (error: any) {
     res.status(400).json({ msg: error.message });
   }

@@ -14,7 +14,6 @@ class TradingService {
       const savedTrading = await newTrading.save();
       return savedTrading;
     } catch (error: any) {
-      console.error(error);
       throw new Error(error.message);
     }
   }
