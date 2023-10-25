@@ -1,6 +1,5 @@
 import path from "path";
 import express, { Express, Request, Response, NextFunction } from "express";
-import * as admin from "firebase-admin";
 
 import apiRoutes from "./api-routes/index.js";
 import firebaseAuthMiddleware from "./middleware/firebaseAuth.js";
@@ -13,11 +12,12 @@ const port: number = Number(process.env.PORT) || 8080;
 process.env.TZ = "UTC";
 
 // connect to MongoDB
-// await db.connect();
+await db.connect();
 
 app.use(express.static("../client/dist"));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(firebaseAuthMiddleware);
 app.use("/api", apiRoutes);
@@ -31,7 +31,6 @@ app.get("*", (_req: Request, res: Response) => {
 // as an Express error-handling middleware.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction): void => {
-  console.error(err.stack);
   res.status(500).json({ msg: "Internal Server Error" });
 });
 

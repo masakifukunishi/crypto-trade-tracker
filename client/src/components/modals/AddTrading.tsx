@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -8,30 +8,30 @@ import InputText from "../forms/InputText";
 import SelectBox from "../forms/SelectBox";
 import tradingApi from "../../api/trading";
 import useAuth from "../../hooks/useAuth";
+import { useErrorHandling } from "../../hooks/useErrorHandling";
 
 const AddTrading: React.FC = () => {
   const user = useAuth();
   const dispatch = useDispatch();
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [date, setDate] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [type, setType] = useState<number>(0);
-  const [errors, setErrors] = useState({ date: [], quantity: [], price: [], type: [] });
+  const { errors, handleErrors } = useErrorHandling({ date: [], quantity: [], price: [], type: [] });
 
-  const handleChangeQuantity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
-    if (value >= 0) setQuantity(value);
-  }, []);
-
-  const handleChangePrice = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (value >= 0) setPrice(value);
-  }, []);
+    if (value >= 0) setValue(value);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    tradingApi.add(user.token, { date, quantity, price, type });
+    try {
+      await tradingApi.add(user.token, { date, quantity, price, type });
+      dispatch(close());
+    } catch (error) {
+      handleErrors(error);
+    }
   };
 
   return (
@@ -55,7 +55,7 @@ const AddTrading: React.FC = () => {
               isNumber={true}
               state={quantity}
               errors={errors.quantity}
-              handleChange={handleChangeQuantity}
+              handleChange={(e) => handleInputNumberChange(e, setQuantity)}
             />
           </div>
           <div className="mt-5">
@@ -66,7 +66,7 @@ const AddTrading: React.FC = () => {
               isNumber={true}
               state={price}
               errors={errors.price}
-              handleChange={handleChangePrice}
+              handleChange={(e) => handleInputNumberChange(e, setPrice)}
             />
           </div>
           <div className="mt-5">
@@ -83,11 +83,21 @@ const AddTrading: React.FC = () => {
               handleChange={(e) => setType(parseInt(e.target.value))}
             />
           </div>
+          <div className="mt-5">
+            <InputText
+              id="date"
+              label="Date"
+              isRequired={true}
+              state={date}
+              errors={errors.date}
+              handleChange={(e) => setDate(e.target.value)}
+            />
+          </div>
           <div className="flex justify-end h-8 mt-11 mb-5">
             <button type="button" className="rounded-md border border-gray-50 w-16 mr-2" onClick={() => dispatch(close())}>
               Cancel
             </button>
-            <button type="submit" className="bg-blue-600 rounded-md border border-blue-400 w-16" disabled={isProcessing}>
+            <button type="submit" className="bg-blue-600 rounded-md border border-blue-400 w-16">
               Save
             </button>
           </div>
