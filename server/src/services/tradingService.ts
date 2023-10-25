@@ -1,7 +1,7 @@
-import TradingModel from "../models/tradings.js";
+import TradingModel, { TradingData } from "../models/tradings.js";
 
 class TradingService {
-  async addTrading(userId: string, date: string, quantity: number, price: number, type: number) {
+  async addTrading(userId: string, date: string, quantity: number, price: number, type: number): Promise<TradingData> {
     const tradingData = {
       userId,
       date,
@@ -10,12 +10,8 @@ class TradingService {
       type,
     };
     const newTrading = new TradingModel(tradingData);
-    try {
-      const savedTrading = await newTrading.save();
-      return savedTrading;
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    const savedTrading = await newTrading.save();
+    return savedTrading;
   }
 }
 

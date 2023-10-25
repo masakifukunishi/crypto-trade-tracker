@@ -26,10 +26,11 @@ declare global {
   }
 }
 
-const firebaseAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+const firebaseAuthMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const token = req.headers.authorization?.split("Bearer ")[1];
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: "Unauthorized" });
+    return;
   }
 
   try {
@@ -37,7 +38,8 @@ const firebaseAuthMiddleware = async (req: Request, res: Response, next: NextFun
     req.user = decodedToken;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: "Unauthorized" });
+    return;
   }
 };
 
