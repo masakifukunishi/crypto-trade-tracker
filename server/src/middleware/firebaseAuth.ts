@@ -2,16 +2,16 @@ import admin from "firebase-admin";
 import config from "../config/index.js";
 import { Request, Response, NextFunction } from "express";
 
-const serviceAccount: any = {
-  project_id: config.FIREBASE_PROJECT_ID,
-  private_key_id: config.FIREBASE_PRIVATE_KEY_ID,
-  private_key: config.FIREBASE_PRIVATE_KEY,
-  client_email: config.FIREBASE_CLIENT_EMAIL,
-  client_id: config.FIREBASE_CLIENT_ID,
-  auth_uri: config.FIREBASE_AUTH_URI,
-  token_uri: config.FIREBASE_TOKEN_URI,
-  auth_provider_x509_cert_url: config.FIREBASE_AUTH_CERT_URL,
-  client_x509_cert_url: config.FIREBASE_CLIENT_CERT_URL,
+const serviceAccount = {
+  projectId: config.FIREBASE_PROJECT_ID,
+  privateKeyId: config.FIREBASE_PRIVATE_KEY_ID,
+  privateKey: config.FIREBASE_PRIVATE_KEY,
+  clientEmail: config.FIREBASE_CLIENT_EMAIL,
+  clientId: config.FIREBASE_CLIENT_ID,
+  authUri: config.FIREBASE_AUTH_URI,
+  tokenUri: config.FIREBASE_TOKEN_URI,
+  authProviderX509CertUrl: config.FIREBASE_AUTH_CERT_URL,
+  clientC509CertUrl: config.FIREBASE_CLIENT_CERT_URL,
 };
 
 admin.initializeApp({
