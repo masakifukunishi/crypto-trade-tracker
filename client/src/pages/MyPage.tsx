@@ -41,10 +41,10 @@ const MyPage: React.FC = () => {
           <table>
             <thead>
               <tr>
-                <th>Price</th>
+                <th>Price Per Coin</th>
                 <th>Quantity</th>
                 <th>Total Amount</th>
-                <th>Type</th>
+                <th>Trading Type</th>
                 <th>Date</th>
               </tr>
             </thead>
