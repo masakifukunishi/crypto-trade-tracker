@@ -1,6 +1,10 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
+import { EDIT_TRADING } from "../../consts/modal";
 import { selectConstantTrading } from "../../store/slicers/constants/trading";
+import { open } from "../../store/slicers/openedModal";
 
 interface Trading {
   _id: string;
@@ -17,6 +21,7 @@ interface Props {
 
 const TradingList: React.FC<Props> = ({ tradings }) => {
   const constantTrading = useSelector(selectConstantTrading);
+  const dispatch = useDispatch();
   return (
     <table>
       <thead>
@@ -26,6 +31,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
           <th>Total Amount</th>
           <th>Trading Type</th>
           <th>Date</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -36,6 +42,29 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
             <td>$ {trading.totalAmount}</td>
             <td>{constantTrading.TRADING_TYPE[trading.type]}</td>
             <td>{trading.date}</td>
+            <td>
+              <FontAwesomeIcon
+                icon={faEdit}
+                size="lg"
+                className="cursor-pointer"
+                onClick={() => {
+                  dispatch(
+                    open({
+                      type: EDIT_TRADING,
+                      param: {
+                        _id: trading._id,
+                        price: trading.price,
+                        quantity: trading.quantity,
+                        totalAmount: trading.totalAmount,
+                        type: trading.type,
+                        date: trading.date,
+                      },
+                    })
+                  );
+                }}
+              />
+              <FontAwesomeIcon icon={faTrash} size="lg" className="cursor-pointer" />
+            </td>
           </tr>
         ))}
       </tbody>
