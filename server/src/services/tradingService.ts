@@ -5,7 +5,7 @@ class TradingService {
     const allTrading = await TradingModel.find({ userId });
     const tradingWithData = allTrading.map((trading) => {
       const totalAmount = trading.price * trading.quantity;
-      return { ...trading.toObject(), totalamount: totalAmount };
+      return { ...trading.toObject(), totalAmount: totalAmount };
     });
     return tradingWithData;
   }
