@@ -77,10 +77,7 @@ const AddTrading: React.FC = () => {
               label="Trading Type"
               isRequired={true}
               state={type}
-              options={[
-                { value: constantTrading.TRADING_TYPE.BUY.id, label: constantTrading.TRADING_TYPE.BUY.name },
-                { value: constantTrading.TRADING_TYPE.SELL.id, label: constantTrading.TRADING_TYPE.SELL.name },
-              ]}
+              options={constantTrading.TRADING_TYPE}
               errors={errors.type}
               handleChange={(e) => setType(e.target.value)}
             />

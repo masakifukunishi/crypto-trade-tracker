@@ -5,7 +5,7 @@ import ErrorMessage from "./ErrorMessage";
 type Props = {
   id?: string;
   label?: string;
-  options: { value: string | number; label: string }[];
+  options: { [key: string]: string };
   isRequired?: boolean;
   state: string | number;
   errors?: string[];
@@ -32,9 +32,9 @@ const SelectBox: React.FC<Props> = memo(({ id = "", label = "", options, isRequi
         <option value="" disabled>
           Select
         </option>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+        {Object.entries(options).map(([value, label]) => (
+          <option key={value} value={value}>
+            {label}
           </option>
         ))}
       </select>

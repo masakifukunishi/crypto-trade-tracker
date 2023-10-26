@@ -1,3 +1,7 @@
+import { useSelector } from "react-redux";
+
+import { selectConstantTrading } from "../../store/slicers/constants/trading";
+
 interface Trading {
   _id: string;
   price: number;
@@ -12,6 +16,7 @@ interface Props {
 }
 
 const TradingList: React.FC<Props> = ({ tradings }) => {
+  const constantTrading = useSelector(selectConstantTrading);
   return (
     <table>
       <thead>
@@ -29,7 +34,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
             <td>$ {trading.price}</td>
             <td>{trading.quantity}</td>
             <td>$ {trading.totalAmount}</td>
-            <td>{trading.type}</td>
+            <td>{constantTrading.TRADING_TYPE[trading.type]}</td>
             <td>{trading.date}</td>
           </tr>
         ))}

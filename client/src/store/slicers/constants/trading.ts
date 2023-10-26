@@ -3,10 +3,7 @@ import { RootState } from "../../store";
 
 const initialState = {
   TRADING_CONSTANT: {
-    TRADING_TYPE: {
-      BUY: { id: "", name: "" },
-      SELL: { id: "", name: "" },
-    },
+    TRADING_TYPE: {},
   },
 };
 

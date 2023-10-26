@@ -1,13 +1,10 @@
+const TRADING_CONSTANT_BUY = "1";
+const TRADING_CONSTANT_SELL = "2";
+
 const TRADING_CONSTANT = {
   TRADING_TYPE: {
-    BUY: {
-      id: 1,
-      name: "Buy",
-    },
-    SELL: {
-      id: 2,
-      name: "Sell",
-    },
+    [TRADING_CONSTANT_BUY]: "Buy",
+    [TRADING_CONSTANT_SELL]: "Sell",
   },
 };
 
