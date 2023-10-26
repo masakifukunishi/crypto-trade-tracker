@@ -4,7 +4,7 @@ import { RootState } from "../store";
 export const openedModal = createSlice({
   name: "openedModal",
   initialState: {
-    modal: { type: "", param: {} },
+    modal: { type: "", param: {} as any },
   },
   reducers: {
     open: (state, action) => {

@@ -1,22 +1,24 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import { close } from "../../store/slicers/openedModal";
-import InputText from "../forms/InputText";
-import SelectBox from "../forms/SelectBox";
-import tradingApi from "../../api/trading";
-import useAuth from "../../hooks/useAuth";
-import { useErrorHandling } from "../../hooks/useErrorHandling";
+import { close } from "../../../store/slicers/openedModal";
+import { selectConstantTrading } from "../../../store/slicers/constants/trading";
+import InputText from "../../forms/InputText";
+import SelectBox from "../../forms/SelectBox";
+import tradingApi from "../../../api/trading";
+import useAuth from "../../../hooks/useAuth";
+import { useErrorHandling } from "../../../hooks/useErrorHandling";
 
 const AddTrading: React.FC = () => {
   const user = useAuth();
   const dispatch = useDispatch();
+  const constantTrading = useSelector(selectConstantTrading);
   const [date, setDate] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
-  const [type, setType] = useState<number>(0);
+  const [type, setType] = useState<string>("");
   const { errors, handleErrors } = useErrorHandling({ date: [], quantity: [], price: [], type: [] });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
@@ -75,12 +77,9 @@ const AddTrading: React.FC = () => {
               label="Trading Type"
               isRequired={true}
               state={type}
-              options={[
-                { value: 1, label: "Buy" },
-                { value: 2, label: "Sell" },
-              ]}
+              options={constantTrading.TRADING_TYPE}
               errors={errors.type}
-              handleChange={(e) => setType(parseInt(e.target.value))}
+              handleChange={(e) => setType(e.target.value)}
             />
           </div>
           <div className="mt-5">

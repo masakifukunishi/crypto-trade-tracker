@@ -5,7 +5,7 @@ setupAxiosInterceptors();
 
 interface Trading {
   date: string;
-  type: number;
+  type: string;
   quantity: number;
   price: number;
 }
@@ -13,6 +13,9 @@ interface Trading {
 const ENDPOINT_URL = "/api/trading";
 
 const tradingApi = {
+  async getAll(token: string) {
+    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", {}, token);
+  },
   async add(token: string, data: Trading) {
     return await makeAuthenticatedRequest(ENDPOINT_URL, "post", data, token);
   },
