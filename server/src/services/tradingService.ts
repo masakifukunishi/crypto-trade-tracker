@@ -59,6 +59,23 @@ class TradingService {
     const savedTrading = await newTrading.save();
     return savedTrading;
   }
+
+  async updateTrading(id: string, date: string, quantity: number, price: number, type: number): Promise<TradingDocument> {
+    const trading = await TradingModel.findById(id);
+
+    if (!trading) {
+      throw new Error("Trading not found");
+    }
+
+    trading.date = date;
+    trading.quantity = quantity;
+    trading.price = price;
+    trading.type = type;
+
+    const updatedTrading = await trading.save();
+
+    return updatedTrading;
+  }
 }
 
 export default TradingService;
