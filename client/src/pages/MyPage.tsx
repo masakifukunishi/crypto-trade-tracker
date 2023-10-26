@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/header";
-import AddTradingModal from "../components/modals/AddTrading";
+import TradingList from "../components/trading/TradingList";
+import AddTradingModal from "../components/trading/modals/AddTrading";
 import { login, logout } from "../utils/auth";
 import { selectOpenedModal, open } from "../store/slicers/openedModal";
 import { ADD_TRADING } from "../consts/modal";
@@ -38,28 +39,7 @@ const MyPage: React.FC = () => {
               Add trading
             </button>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Price Per Coin</th>
-                <th>Quantity</th>
-                <th>Total Amount</th>
-                <th>Trading Type</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tradings.map((trading) => (
-                <tr key={trading._id}>
-                  <td>$ {trading.price}</td>
-                  <td>{trading.quantity}</td>
-                  <td>$ {trading.totalamount}</td>
-                  <td>{trading.type}</td>
-                  <td>{trading.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <TradingList tradings={tradings} />
           <button onClick={logout}>Logout</button>
         </>
       ) : (

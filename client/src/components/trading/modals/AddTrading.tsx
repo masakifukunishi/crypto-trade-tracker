@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import { close } from "../../store/slicers/openedModal";
-import InputText from "../forms/InputText";
-import SelectBox from "../forms/SelectBox";
-import tradingApi from "../../api/trading";
-import useAuth from "../../hooks/useAuth";
-import { useErrorHandling } from "../../hooks/useErrorHandling";
+import { close } from "../../../store/slicers/openedModal";
+import InputText from "../../forms/InputText";
+import SelectBox from "../../forms/SelectBox";
+import tradingApi from "../../../api/trading";
+import useAuth from "../../../hooks/useAuth";
+import { useErrorHandling } from "../../../hooks/useErrorHandling";
 
 const AddTrading: React.FC = () => {
   const user = useAuth();
