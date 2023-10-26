@@ -5,7 +5,7 @@ setupAxiosInterceptors();
 
 interface Trading {
   date: string;
-  type: number;
+  type: string;
   quantity: number;
   price: number;
 }

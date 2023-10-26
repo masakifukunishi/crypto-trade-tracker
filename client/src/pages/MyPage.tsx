@@ -8,6 +8,7 @@ import { login, logout } from "../utils/auth";
 import { selectOpenedModal, open } from "../store/slicers/openedModal";
 import { ADD_TRADING } from "../consts/modal";
 import useAuth from "../hooks/useAuth";
+import useFetchConstants from "../hooks/useFetchConstants";
 import tradingApi from "../api/trading";
 
 const MyPage: React.FC = () => {
@@ -15,6 +16,7 @@ const MyPage: React.FC = () => {
   const user = useAuth();
   const openedModal = useSelector(selectOpenedModal);
   const dispatch = useDispatch();
+  useFetchConstants("trading");
   useEffect(() => {
     if (!user) return;
     const fetch = async () => {

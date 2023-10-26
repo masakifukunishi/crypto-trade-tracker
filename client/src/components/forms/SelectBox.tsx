@@ -29,6 +29,9 @@ const SelectBox: React.FC<Props> = memo(({ id = "", label = "", options, isRequi
         value={state + ""}
         onChange={handleChange}
       >
+        <option value="" disabled>
+          Select
+        </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

@@ -9,11 +9,13 @@ export interface TradingDocument extends Document {
 }
 
 export interface TradingData {
+  _id: string;
   userId: string;
   price: number;
   quantity: number;
   date: string;
   type: number;
+  __v: number;
 }
 
 const TradingsSchema = new Schema<TradingDocument>({
