@@ -60,13 +60,11 @@ class TradingService {
     return savedTrading;
   }
 
-  async updateTrading(id: string, date: string, quantity: number, price: number, type: number): Promise<TradingDocument> {
-    const trading = await TradingModel.findById(id);
-
+  async updateTrading(userId: string, id: string, date: string, quantity: number, price: number, type: number): Promise<TradingDocument> {
+    const trading = await TradingModel.findOne({ _id: id, userId: userId });
     if (!trading) {
       throw new Error("Trading not found");
     }
-
     trading.date = date;
     trading.quantity = quantity;
     trading.price = price;
@@ -75,6 +73,14 @@ class TradingService {
     const updatedTrading = await trading.save();
 
     return updatedTrading;
+  }
+
+  async deleteTrading(userId: string, id: string): Promise<TradingDocument> {
+    const deletedTrading = await TradingModel.findOneAndDelete({ _id: id, userId: userId });
+    if (!deletedTrading) {
+      throw new Error("Trading not found");
+    }
+    return deletedTrading;
   }
 }
 

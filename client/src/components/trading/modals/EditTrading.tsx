@@ -30,7 +30,7 @@ const EditTrading: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await tradingApi.edit(user.token, { id: param._id, date, quantity, price, type });
+      await tradingApi.edit(user.token, param._id, { date, quantity, price, type });
       dispatch(close());
     } catch (error) {
       handleErrors(error);

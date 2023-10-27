@@ -5,9 +5,10 @@ import Header from "../components/header";
 import TradingList from "../components/trading/TradingList";
 import AddTradingModal from "../components/trading/modals/AddTrading";
 import EditTradingModal from "../components/trading/modals/EditTrading";
+import DeleteTradingModal from "../components/trading/modals/DeleteTrading";
 import { login, logout } from "../utils/auth";
 import { selectOpenedModal, open } from "../store/slicers/openedModal";
-import { ADD_TRADING, EDIT_TRADING } from "../consts/modal";
+import { ADD_TRADING, EDIT_TRADING, DELETE_TRADING } from "../consts/modal";
 import useAuth from "../hooks/useAuth";
 import useFetchConstants from "../hooks/useFetchConstants";
 import tradingApi from "../api/trading";
@@ -51,6 +52,7 @@ const MyPage: React.FC = () => {
       )}
       {openedModal.type === ADD_TRADING && <AddTradingModal />}
       {openedModal.type === EDIT_TRADING && <EditTradingModal />}
+      {openedModal.type === DELETE_TRADING && <DeleteTradingModal />}
     </div>
   );
 };
