@@ -6,14 +6,18 @@ import { close, selectOpenedModal } from "../../../store/slicers/openedModal";
 import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 
-const EditTrading: React.FC = () => {
+interface DeleteTradingProps {
+  onSubmitSuccess: () => void;
+}
+
+const DeleteTrading: React.FC<DeleteTradingProps> = ({ onSubmitSuccess }) => {
   const user = useAuth();
   const dispatch = useDispatch();
   const { param } = useSelector(selectOpenedModal);
 
   const onDeleteClick = async () => {
-    console.log("delete");
     await tradingApi.delete(user.token, param._id);
+    onSubmitSuccess();
     dispatch(close());
   };
 
@@ -43,4 +47,4 @@ const EditTrading: React.FC = () => {
   );
 };
 
-export default EditTrading;
+export default DeleteTrading;
