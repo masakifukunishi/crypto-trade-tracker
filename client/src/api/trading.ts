@@ -1,9 +1,10 @@
 import { setupAxiosInterceptors } from "./libs/axiosInterceptors";
 import { makeAuthenticatedRequest } from "./libs/requestHelper";
 
-setupAxiosInterceptors();
+// setupAxiosInterceptors();
 
 interface Trading {
+  id?: string;
   date: string;
   type: string;
   quantity: number;
