@@ -27,10 +27,23 @@ export const addTrading = async (req: Request, res: Response): Promise<void> => 
 };
 
 export const updateTrading = async (req: Request, res: Response): Promise<void> => {
-  const { id, date, quantity, price, type } = req.body;
+  const id = req.params.id;
+  const { date, quantity, price, type } = req.body;
+  const { user } = req;
   try {
-    const updatedTrading = await tradingService.updateTrading(id, date, quantity, price, type);
+    const updatedTrading = await tradingService.updateTrading(user.uid, id, date, quantity, price, type);
     res.status(200).json(updatedTrading);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteTrading = async (req: Request, res: Response): Promise<void> => {
+  const id = req.params.id;
+  const { user } = req;
+  try {
+    const deletedTrading = await tradingService.deleteTrading(user.uid, id);
+    res.status(200).json(deletedTrading);
   } catch (error) {
     console.log(error);
   }

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { EDIT_TRADING } from "../../consts/modal";
+import { EDIT_TRADING, DELETE_TRADING } from "../../consts/modal";
 import { selectConstantTrading } from "../../store/slicers/constants/trading";
 import { open } from "../../store/slicers/openedModal";
 
@@ -63,7 +63,19 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
                   );
                 }}
               />
-              <FontAwesomeIcon icon={faTrash} size="lg" className="cursor-pointer" />
+              <FontAwesomeIcon
+                icon={faTrash}
+                size="lg"
+                className="cursor-pointer"
+                onClick={() => {
+                  dispatch(
+                    open({
+                      type: DELETE_TRADING,
+                      param: { _id: trading._id },
+                    })
+                  );
+                }}
+              />
             </td>
           </tr>
         ))}
