@@ -11,7 +11,11 @@ import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 import { useErrorHandling } from "../../../hooks/useErrorHandling";
 
-const EditTrading: React.FC = () => {
+interface EditTradingProps {
+  onSubmitSuccess: () => void;
+}
+
+const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
   const user = useAuth();
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
@@ -31,6 +35,7 @@ const EditTrading: React.FC = () => {
     e.preventDefault();
     try {
       await tradingApi.edit(user.token, param._id, { date, quantity, price, type });
+      onSubmitSuccess();
       dispatch(close());
     } catch (error) {
       handleErrors(error);

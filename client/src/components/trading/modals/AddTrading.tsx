@@ -11,7 +11,11 @@ import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 import { useErrorHandling } from "../../../hooks/useErrorHandling";
 
-const AddTrading: React.FC = () => {
+interface AddTradingProps {
+  onSubmitSuccess: () => void;
+}
+
+const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const user = useAuth();
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
@@ -30,6 +34,7 @@ const AddTrading: React.FC = () => {
     e.preventDefault();
     try {
       await tradingApi.add(user.token, { date, quantity, price, type });
+      onSubmitSuccess();
       dispatch(close());
     } catch (error) {
       handleErrors(error);

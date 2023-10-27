@@ -19,14 +19,17 @@ const MyPage: React.FC = () => {
   const openedModal = useSelector(selectOpenedModal);
   const dispatch = useDispatch();
   useFetchConstants("trading");
+  // get all tradings
+  const fetch = async () => {
+    const res = await tradingApi.getAll(user.token);
+    setTradings(res);
+  };
+
   useEffect(() => {
     if (!user) return;
-    const fetch = async () => {
-      const res = await tradingApi.getAll(user.token);
-      setTradings(res);
-    };
     fetch();
   }, [user]);
+
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-3">
       <Header />
@@ -50,9 +53,9 @@ const MyPage: React.FC = () => {
           <button onClick={login}>Login</button>
         </>
       )}
-      {openedModal.type === ADD_TRADING && <AddTradingModal />}
-      {openedModal.type === EDIT_TRADING && <EditTradingModal />}
-      {openedModal.type === DELETE_TRADING && <DeleteTradingModal />}
+      {openedModal.type === ADD_TRADING && <AddTradingModal onSubmitSuccess={fetch} />}
+      {openedModal.type === EDIT_TRADING && <EditTradingModal onSubmitSuccess={fetch} />}
+      {openedModal.type === DELETE_TRADING && <DeleteTradingModal onSubmitSuccess={fetch} />}
     </div>
   );
 };
