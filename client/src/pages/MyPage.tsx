@@ -22,7 +22,6 @@ const MyPage: React.FC = () => {
     if (!user) return;
     const fetch = async () => {
       const res = await tradingApi.getAll(user.token);
-      console.log(res);
       setTradings(res);
     };
     fetch();
