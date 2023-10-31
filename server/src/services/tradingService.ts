@@ -47,10 +47,10 @@ class TradingService {
     // ];
     return tradingWithData;
   }
-  async addTrading(userId: string, date: string, quantity: number, price: number, type: number): Promise<TradingDocument> {
+  async addTrading(userId: string, tradeTime: number, quantity: number, price: number, type: number): Promise<TradingDocument> {
     const tradingData = {
       userId,
-      date,
+      tradeTime,
       quantity,
       price,
       type,
@@ -60,12 +60,19 @@ class TradingService {
     return savedTrading;
   }
 
-  async updateTrading(userId: string, id: string, date: string, quantity: number, price: number, type: number): Promise<TradingDocument> {
+  async updateTrading(
+    userId: string,
+    id: string,
+    tradeTime: number,
+    quantity: number,
+    price: number,
+    type: number
+  ): Promise<TradingDocument> {
     const trading = await TradingModel.findOne({ _id: id, userId: userId });
     if (!trading) {
       throw new Error("Trading not found");
     }
-    trading.date = date;
+    trading.tradeTime = tradeTime;
     trading.quantity = quantity;
     trading.price = price;
     trading.type = type;

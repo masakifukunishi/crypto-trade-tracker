@@ -7,6 +7,7 @@ import { close, selectOpenedModal } from "../../../store/slicers/openedModal";
 import { selectConstantTrading } from "../../../store/slicers/constants/trading";
 import InputText from "../../forms/InputText";
 import SelectBox from "../../forms/SelectBox";
+import DateTime from "../../forms/DateTime";
 import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 import { useErrorHandling } from "../../../hooks/useErrorHandling";
@@ -20,7 +21,7 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
   const { param } = useSelector(selectOpenedModal);
-  const [date, setDate] = useState<string>(param.date);
+  const [date, setDate] = useState<string>(param.tradeTime);
   const [quantity, setQuantity] = useState<number>(param.quantity);
   const [price, setPrice] = useState<number>(param.price);
   const [type, setType] = useState<string>(param.type);
@@ -89,13 +90,13 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
             />
           </div>
           <div className="mt-5">
-            <InputText
+            <DateTime
               id="date"
               label="Date"
               isRequired={true}
               state={date}
               errors={errors.date}
-              handleChange={(e) => setDate(e.target.value)}
+              handleChange={(value: string) => setDate(value)}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">

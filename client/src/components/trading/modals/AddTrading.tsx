@@ -7,6 +7,7 @@ import { close } from "../../../store/slicers/openedModal";
 import { selectConstantTrading } from "../../../store/slicers/constants/trading";
 import InputText from "../../forms/InputText";
 import SelectBox from "../../forms/SelectBox";
+import DateTime from "../../forms/DateTime";
 import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 import { useErrorHandling } from "../../../hooks/useErrorHandling";
@@ -88,13 +89,13 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
             />
           </div>
           <div className="mt-5">
-            <InputText
+            <DateTime
               id="date"
               label="Date"
               isRequired={true}
               state={date}
               errors={errors.date}
-              handleChange={(e) => setDate(e.target.value)}
+              handleChange={(value: string) => setDate(value)}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">

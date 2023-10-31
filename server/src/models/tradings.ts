@@ -4,7 +4,7 @@ export interface TradingDocument extends Document {
   userId: string;
   price: number;
   quantity: number;
-  date: string;
+  tradeTime: number;
   type: number;
 }
 
@@ -13,7 +13,7 @@ export interface TradingData {
   userId: string;
   price: number;
   quantity: number;
-  date: string;
+  tradeTime: string;
   type: number;
   __v: number;
 }
@@ -31,8 +31,8 @@ const TradingsSchema = new Schema<TradingDocument>({
     type: Number,
     required: true,
   },
-  date: {
-    type: String,
+  tradeTime: {
+    type: Number,
     required: true,
   },
   type: {

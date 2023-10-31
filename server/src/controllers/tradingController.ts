@@ -16,10 +16,13 @@ export const getAllTrading = async (req: Request, res: Response): Promise<void> 
 
 export const addTrading = async (req: Request, res: Response): Promise<void> => {
   const { date, quantity, price, type } = req.body;
+  const dateObject = new Date(date);
+  const tradeTime = dateObject.getTime();
+
   const { user } = req;
   const userId = user?.uid;
   try {
-    const newTrading = await tradingService.addTrading(userId, date, quantity, price, type);
+    const newTrading = await tradingService.addTrading(userId, tradeTime, quantity, price, type);
     res.status(201).json(newTrading);
   } catch (error) {
     console.log(error);
@@ -29,9 +32,11 @@ export const addTrading = async (req: Request, res: Response): Promise<void> => 
 export const updateTrading = async (req: Request, res: Response): Promise<void> => {
   const id = req.params.id;
   const { date, quantity, price, type } = req.body;
+  const dateObject = new Date(date);
+  const tradeTime = dateObject.getTime();
   const { user } = req;
   try {
-    const updatedTrading = await tradingService.updateTrading(user.uid, id, date, quantity, price, type);
+    const updatedTrading = await tradingService.updateTrading(user.uid, id, tradeTime, quantity, price, type);
     res.status(200).json(updatedTrading);
   } catch (error) {
     console.log(error);

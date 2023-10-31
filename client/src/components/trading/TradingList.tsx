@@ -12,7 +12,7 @@ interface Trading {
   quantity: number;
   totalAmount: number;
   type: string;
-  date: string;
+  tradeTime: string;
 }
 
 interface Props {
@@ -41,7 +41,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
             <td>{trading.quantity}</td>
             <td>$ {trading.totalAmount}</td>
             <td>{constantTrading.TRADING_TYPE[trading.type]}</td>
-            <td>{trading.date}</td>
+            <td>{trading.tradeTime}</td>
             <td>
               <FontAwesomeIcon
                 icon={faEdit}
@@ -57,7 +57,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
                         quantity: trading.quantity,
                         totalAmount: trading.totalAmount,
                         type: trading.type,
-                        date: trading.date,
+                        tradeTime: trading.tradeTime,
                       },
                     })
                   );
