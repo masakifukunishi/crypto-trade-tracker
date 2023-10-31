@@ -11,6 +11,7 @@ import { selectOpenedModal, open } from "../store/slicers/openedModal";
 import { ADD_TRADING, EDIT_TRADING, DELETE_TRADING } from "../consts/modal";
 import useAuth from "../hooks/useAuth";
 import useFetchConstants from "../hooks/useFetchConstants";
+import useFetchConfigs from "../hooks/useFetchConfigs";
 import tradingApi from "../api/trading";
 
 const MyPage: React.FC = () => {
@@ -19,6 +20,7 @@ const MyPage: React.FC = () => {
   const openedModal = useSelector(selectOpenedModal);
   const dispatch = useDispatch();
   useFetchConstants("trading");
+  useFetchConfigs("kraken");
   // get all tradings
   const fetch = async () => {
     const res = await tradingApi.getAll(user.token);
