@@ -20,7 +20,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const user = useAuth();
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
-  const [date, setDate] = useState<string>("");
+  const [tradeTime, setTradeTime] = useState<number>();
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [type, setType] = useState<string>("");
@@ -34,7 +34,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await tradingApi.add(user.token, { date, quantity, price, type });
+      await tradingApi.add(user.token, { tradeTime, quantity, price, type });
       onSubmitSuccess();
       dispatch(close());
     } catch (error) {
@@ -93,9 +93,9 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
               id="date"
               label="Date"
               isRequired={true}
-              state={date}
+              state={tradeTime}
               errors={errors.date}
-              handleChange={(value: string) => setDate(value)}
+              handleChange={(value) => setTradeTime(Date.parse(value))}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">

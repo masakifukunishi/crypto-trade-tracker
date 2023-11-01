@@ -15,9 +15,7 @@ export const getAllTrading = async (req: Request, res: Response): Promise<void> 
 };
 
 export const addTrading = async (req: Request, res: Response): Promise<void> => {
-  const { date, quantity, price, type } = req.body;
-  const dateObject = new Date(date);
-  const tradeTime = dateObject.getTime();
+  const { tradeTime, quantity, price, type } = req.body;
 
   const { user } = req;
   const userId = user?.uid;
@@ -31,9 +29,7 @@ export const addTrading = async (req: Request, res: Response): Promise<void> => 
 
 export const updateTrading = async (req: Request, res: Response): Promise<void> => {
   const id = req.params.id;
-  const { date, quantity, price, type } = req.body;
-  const dateObject = new Date(date);
-  const tradeTime = dateObject.getTime();
+  const { tradeTime, quantity, price, type } = req.body;
   const { user } = req;
   try {
     const updatedTrading = await tradingService.updateTrading(user.uid, id, tradeTime, quantity, price, type);

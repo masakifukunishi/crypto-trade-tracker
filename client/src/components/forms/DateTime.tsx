@@ -8,9 +8,9 @@ type Props = {
   id?: string;
   label?: string;
   isRequired?: boolean;
-  state: string;
+  state: number;
   errors?: string[];
-  handleChange: (event: any) => void;
+  handleChange: (value: string) => void;
 };
 
 const DateTime: React.FC<Props> = memo(({ id = "", label = "", isRequired = false, state, errors = [], handleChange }) => {
@@ -25,9 +25,10 @@ const DateTime: React.FC<Props> = memo(({ id = "", label = "", isRequired = fals
       <Datetime
         inputProps={{
           id: id,
+          autoComplete: "off",
           className: "w-full bg-transparent focus:outline-none border-b-2 pl-0.5 pb-1 focus:border-sky-300 text-gray-50",
         }}
-        value={state}
+        value={new Date(state)}
         onChange={handleChange}
       />
       <ErrorMessage errors={errors}></ErrorMessage>

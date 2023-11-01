@@ -21,7 +21,7 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
   const { param } = useSelector(selectOpenedModal);
-  const [date, setDate] = useState<string>(param.tradeTime);
+  const [tradeTime, setTradeTime] = useState<number>(param.tradeTime);
   const [quantity, setQuantity] = useState<number>(param.quantity);
   const [price, setPrice] = useState<number>(param.price);
   const [type, setType] = useState<string>(param.type);
@@ -35,7 +35,7 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await tradingApi.edit(user.token, param._id, { date, quantity, price, type });
+      await tradingApi.edit(user.token, param._id, { tradeTime, quantity, price, type });
       onSubmitSuccess();
       dispatch(close());
     } catch (error) {
@@ -94,9 +94,9 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
               id="date"
               label="Date"
               isRequired={true}
-              state={date}
+              state={tradeTime}
               errors={errors.date}
-              handleChange={(value: string) => setDate(value)}
+              handleChange={(value) => setTradeTime(Date.parse(value))}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">
