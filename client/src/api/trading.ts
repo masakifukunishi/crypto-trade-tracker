@@ -1,7 +1,7 @@
 import { setupAxiosInterceptors } from "./libs/axiosInterceptors";
 import { makeAuthenticatedRequest } from "./libs/requestHelper";
 
-// setupAxiosInterceptors();
+setupAxiosInterceptors();
 
 interface Trading {
   tradeTime: number;

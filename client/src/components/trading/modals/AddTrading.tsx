@@ -24,7 +24,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [type, setType] = useState<string>("");
-  const { errors, handleErrors } = useErrorHandling({ date: [], quantity: [], price: [], type: [] });
+  const { errors, handleErrors } = useErrorHandling({ tradeTime: [], quantity: [], price: [], type: [] });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
@@ -38,6 +38,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
       onSubmitSuccess();
       dispatch(close());
     } catch (error) {
+      console.log(error);
       handleErrors(error);
     }
   };
@@ -94,7 +95,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
               label="Date"
               isRequired={true}
               state={tradeTime}
-              errors={errors.date}
+              errors={errors.tradeTime}
               handleChange={(value) => setTradeTime(Date.parse(value))}
             />
           </div>
