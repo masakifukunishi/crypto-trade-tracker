@@ -1,9 +1,5 @@
 import axios from "axios";
 
-import { setupAxiosInterceptors } from "./libs/axiosInterceptors";
-
-setupAxiosInterceptors();
-
 const ENDPOINT_URL = "/api/configs";
 
 const configsApi = {

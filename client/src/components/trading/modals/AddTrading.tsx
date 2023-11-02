@@ -7,6 +7,7 @@ import { close } from "../../../store/slicers/openedModal";
 import { selectConstantTrading } from "../../../store/slicers/constants/trading";
 import InputText from "../../forms/InputText";
 import SelectBox from "../../forms/SelectBox";
+import DateTime from "../../forms/DateTime";
 import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 import { useErrorHandling } from "../../../hooks/useErrorHandling";
@@ -19,11 +20,11 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const user = useAuth();
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
-  const [date, setDate] = useState<string>("");
+  const [tradeTime, setTradeTime] = useState<number>();
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [type, setType] = useState<string>("");
-  const { errors, handleErrors } = useErrorHandling({ date: [], quantity: [], price: [], type: [] });
+  const { errors, handleErrors } = useErrorHandling({ tradeTime: [], quantity: [], price: [], type: [] });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
@@ -33,10 +34,11 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await tradingApi.add(user.token, { date, quantity, price, type });
+      await tradingApi.add(user.token, { tradeTime, quantity, price, type });
       onSubmitSuccess();
       dispatch(close());
     } catch (error) {
+      console.log(error);
       handleErrors(error);
     }
   };
@@ -88,13 +90,13 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
             />
           </div>
           <div className="mt-5">
-            <InputText
-              id="date"
-              label="Date"
+            <DateTime
+              id="time"
+              label="TIme"
               isRequired={true}
-              state={date}
-              errors={errors.date}
-              handleChange={(e) => setDate(e.target.value)}
+              state={tradeTime}
+              errors={errors.tradeTime}
+              handleChange={(value) => setTradeTime(Date.parse(value))}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">

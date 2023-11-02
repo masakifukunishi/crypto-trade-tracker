@@ -5,6 +5,7 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { EDIT_TRADING, DELETE_TRADING } from "../../consts/modal";
 import { selectConstantTrading } from "../../store/slicers/constants/trading";
 import { open } from "../../store/slicers/openedModal";
+import formatTimestamp from "../../utils/formatTimestamp";
 
 interface Trading {
   _id: string;
@@ -12,7 +13,7 @@ interface Trading {
   quantity: number;
   totalAmount: number;
   type: string;
-  date: string;
+  tradeTime: number;
 }
 
 interface Props {
@@ -30,7 +31,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
           <th>Quantity</th>
           <th>Total Amount</th>
           <th>Trading Type</th>
-          <th>Date</th>
+          <th>Time</th>
           <th></th>
         </tr>
       </thead>
@@ -41,7 +42,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
             <td>{trading.quantity}</td>
             <td>$ {trading.totalAmount}</td>
             <td>{constantTrading.TRADING_TYPE[trading.type]}</td>
-            <td>{trading.date}</td>
+            <td>{formatTimestamp(trading.tradeTime)}</td>
             <td>
               <FontAwesomeIcon
                 icon={faEdit}
@@ -57,7 +58,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
                         quantity: trading.quantity,
                         totalAmount: trading.totalAmount,
                         type: trading.type,
-                        date: trading.date,
+                        tradeTime: trading.tradeTime,
                       },
                     })
                   );

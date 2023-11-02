@@ -7,6 +7,7 @@ import { close, selectOpenedModal } from "../../../store/slicers/openedModal";
 import { selectConstantTrading } from "../../../store/slicers/constants/trading";
 import InputText from "../../forms/InputText";
 import SelectBox from "../../forms/SelectBox";
+import DateTime from "../../forms/DateTime";
 import tradingApi from "../../../api/trading";
 import useAuth from "../../../hooks/useAuth";
 import { useErrorHandling } from "../../../hooks/useErrorHandling";
@@ -20,11 +21,11 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
   const { param } = useSelector(selectOpenedModal);
-  const [date, setDate] = useState<string>(param.date);
+  const [tradeTime, setTradeTime] = useState<number>(param.tradeTime);
   const [quantity, setQuantity] = useState<number>(param.quantity);
   const [price, setPrice] = useState<number>(param.price);
   const [type, setType] = useState<string>(param.type);
-  const { errors, handleErrors } = useErrorHandling({ date: [], quantity: [], price: [], type: [] });
+  const { errors, handleErrors } = useErrorHandling({ tradeTime: [], quantity: [], price: [], type: [] });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
@@ -34,7 +35,7 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await tradingApi.edit(user.token, param._id, { date, quantity, price, type });
+      await tradingApi.edit(user.token, param._id, { tradeTime, quantity, price, type });
       onSubmitSuccess();
       dispatch(close());
     } catch (error) {
@@ -89,13 +90,13 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
             />
           </div>
           <div className="mt-5">
-            <InputText
-              id="date"
-              label="Date"
+            <DateTime
+              id="time"
+              label="Time"
               isRequired={true}
-              state={date}
-              errors={errors.date}
-              handleChange={(e) => setDate(e.target.value)}
+              state={tradeTime}
+              errors={errors.tradeTime}
+              handleChange={(value) => setTradeTime(Date.parse(value))}
             />
           </div>
           <div className="flex justify-end h-8 mt-11 mb-5">
