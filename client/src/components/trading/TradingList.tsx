@@ -31,7 +31,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
           <th>Quantity</th>
           <th>Total Amount</th>
           <th>Trading Type</th>
-          <th>Date</th>
+          <th>Time</th>
           <th></th>
         </tr>
       </thead>

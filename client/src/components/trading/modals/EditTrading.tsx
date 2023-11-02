@@ -91,8 +91,8 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
           </div>
           <div className="mt-5">
             <DateTime
-              id="date"
-              label="Date"
+              id="time"
+              label="Time"
               isRequired={true}
               state={tradeTime}
               errors={errors.tradeTime}
