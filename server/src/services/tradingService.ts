@@ -9,9 +9,17 @@ class TradingService {
     });
     return tradingWithData;
   }
-  async addTrading(userId: string, tradeTime: number, quantity: number, price: number, type: number): Promise<TradingDocument> {
+  async addTrading(
+    userId: string,
+    coin: string,
+    tradeTime: number,
+    quantity: number,
+    price: number,
+    type: number
+  ): Promise<TradingDocument> {
     const tradingData = {
       userId,
+      coin,
       tradeTime,
       quantity,
       price,
@@ -25,6 +33,7 @@ class TradingService {
   async updateTrading(
     userId: string,
     id: string,
+    coin: string,
     tradeTime: number,
     quantity: number,
     price: number,
@@ -34,6 +43,7 @@ class TradingService {
     if (!trading) {
       throw new Error("Trading not found");
     }
+    trading.coin = coin;
     trading.tradeTime = tradeTime;
     trading.quantity = quantity;
     trading.price = price;

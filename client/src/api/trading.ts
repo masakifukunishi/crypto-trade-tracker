@@ -4,6 +4,7 @@ import { makeAuthenticatedRequest } from "./libs/requestHelper";
 setupAxiosInterceptors();
 
 interface Trading {
+  coin: string;
   tradeTime: number;
   type: string;
   quantity: number;
