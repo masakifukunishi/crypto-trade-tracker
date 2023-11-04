@@ -6,8 +6,9 @@ const tradingService = new TradingService();
 export const getAllTrading = async (req: Request, res: Response): Promise<void> => {
   const { user } = req;
   const userId = user?.uid;
+  const { selectedCoin } = req.query;
   try {
-    const allTrading = await tradingService.getAllTrading(userId);
+    const allTrading = await tradingService.getAllTrading(userId, selectedCoin as string);
     res.status(200).json(allTrading);
   } catch (error) {
     console.log(error);
