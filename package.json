@@ -9,11 +9,16 @@
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
     "dev-server": "npm run dev --prefix server",
-    "dev-client": "npm run dev --prefix client"
+    "dev-client": "npm run dev --prefix client",
+    "dev-initialize-data": "npm run dev-initialize-data --prefix server",
+    "dev-update-data": "npm run dev-update-data --prefix server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.8"
   }
 }
