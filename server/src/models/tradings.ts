@@ -2,6 +2,7 @@ import { Schema, model, Document, Model } from "mongoose";
 
 export interface TradingDocument extends Document {
   userId: string;
+  coin: string;
   price: number;
   quantity: number;
   tradeTime: number;
@@ -11,6 +12,7 @@ export interface TradingDocument extends Document {
 export interface TradingData {
   _id: string;
   userId: string;
+  coin: string;
   price: number;
   quantity: number;
   tradeTime: string;
@@ -20,6 +22,10 @@ export interface TradingData {
 
 const TradingsSchema = new Schema<TradingDocument>({
   userId: {
+    type: String,
+    required: true,
+  },
+  coin: {
     type: String,
     required: true,
   },

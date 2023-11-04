@@ -4,6 +4,7 @@ import { makeAuthenticatedRequest } from "./libs/requestHelper";
 setupAxiosInterceptors();
 
 interface Trading {
+  coin: string;
   tradeTime: number;
   type: string;
   quantity: number;
@@ -13,8 +14,8 @@ interface Trading {
 const ENDPOINT_URL = "/api/trading";
 
 const tradingApi = {
-  async getAll(token: string) {
-    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", {}, token);
+  async getAll(token: string, selectedCoin: string) {
+    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", { selectedCoin }, token);
   },
   async add(token: string, data: Trading) {
     return await makeAuthenticatedRequest(ENDPOINT_URL, "post", data, token);

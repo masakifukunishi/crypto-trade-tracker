@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { body, validationResult } from "express-validator";
 
 export const validateTrading = [
+  body("coin").notEmpty().withMessage("Coin is required"),
   body("tradeTime")
     .matches(/^\d{13}$/)
     .withMessage("Trade date must be a valid date"),

@@ -9,6 +9,7 @@ import formatTimestamp from "../../utils/formatTimestamp";
 
 interface Trading {
   _id: string;
+  coin: string;
   price: number;
   quantity: number;
   totalAmount: number;
@@ -27,6 +28,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
     <table>
       <thead>
         <tr>
+          <th>Coin</th>
           <th>Price Per Coin</th>
           <th>Quantity</th>
           <th>Total Amount</th>
@@ -38,6 +40,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
       <tbody>
         {tradings.map((trading) => (
           <tr key={trading._id}>
+            <td>{trading.coin}</td>
             <td>$ {trading.price}</td>
             <td>{trading.quantity}</td>
             <td>$ {trading.totalAmount}</td>
@@ -54,6 +57,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
                       type: EDIT_TRADING,
                       param: {
                         _id: trading._id,
+                        coin: trading.coin,
                         price: trading.price,
                         quantity: trading.quantity,
                         totalAmount: trading.totalAmount,

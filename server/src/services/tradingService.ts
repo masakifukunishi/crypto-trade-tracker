@@ -1,17 +1,29 @@
 import TradingModel, { TradingData, TradingDocument } from "../models/tradings.js";
 
 class TradingService {
-  async getAllTrading(userId: string): Promise<any[]> {
-    const allTrading = await TradingModel.find({ userId }).sort({ tradeTime: -1 });
+  async getAllTrading(userId: string, selectedCoin?: string): Promise<any[]> {
+    let query: { userId: string; coin?: string } = { userId };
+    if (selectedCoin) {
+      query.coin = selectedCoin;
+    }
+    const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
     const tradingWithData = allTrading.map((trading) => {
       const totalAmount = trading.price * trading.quantity;
       return { ...trading.toObject(), totalAmount: totalAmount };
     });
     return tradingWithData;
   }
-  async addTrading(userId: string, tradeTime: number, quantity: number, price: number, type: number): Promise<TradingDocument> {
+  async addTrading(
+    userId: string,
+    coin: string,
+    tradeTime: number,
+    quantity: number,
+    price: number,
+    type: number
+  ): Promise<TradingDocument> {
     const tradingData = {
       userId,
+      coin,
       tradeTime,
       quantity,
       price,
@@ -25,6 +37,7 @@ class TradingService {
   async updateTrading(
     userId: string,
     id: string,
+    coin: string,
     tradeTime: number,
     quantity: number,
     price: number,
@@ -34,6 +47,7 @@ class TradingService {
     if (!trading) {
       throw new Error("Trading not found");
     }
+    trading.coin = coin;
     trading.tradeTime = tradeTime;
     trading.quantity = quantity;
     trading.price = price;

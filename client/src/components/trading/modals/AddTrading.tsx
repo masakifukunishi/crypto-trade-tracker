@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+import { selecKrakenConfig } from "../../../store/slicers/config";
 import { close } from "../../../store/slicers/openedModal";
 import { selectConstantTrading } from "../../../store/slicers/constants/trading";
 import InputText from "../../forms/InputText";
@@ -20,11 +21,21 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const user = useAuth();
   const dispatch = useDispatch();
   const constantTrading = useSelector(selectConstantTrading);
+  const [coin, setCoin] = useState<string>("");
   const [tradeTime, setTradeTime] = useState<number>();
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [type, setType] = useState<string>("");
-  const { errors, handleErrors } = useErrorHandling({ tradeTime: [], quantity: [], price: [], type: [] });
+  const { errors, handleErrors } = useErrorHandling({ coin: [], tradeTime: [], quantity: [], price: [], type: [] });
+
+  const krakenConfig = useSelector(selecKrakenConfig);
+  const quoteAssets = krakenConfig.quoteAssets;
+  const currencyOptions = {};
+  quoteAssets.forEach((quoteAsset: { symbol: string; altname: string }) => {
+    const key = quoteAsset.symbol;
+    const value = quoteAsset.altname;
+    currencyOptions[key] = value;
+  });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
     const value = parseInt(e.target.value);
@@ -34,7 +45,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await tradingApi.add(user.token, { tradeTime, quantity, price, type });
+      await tradingApi.add(user.token, { coin, tradeTime, quantity, price, type });
       onSubmitSuccess();
       dispatch(close());
     } catch (error) {
@@ -56,6 +67,17 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
           <FontAwesomeIcon icon={faXmark} size="lg" className="cursor-pointer" onClick={() => dispatch(close())} />
         </div>
         <form className="mx-7" onSubmit={handleSubmit}>
+          <div className="mt-5">
+            <SelectBox
+              id="coin"
+              label="Coin"
+              isRequired={true}
+              state={coin}
+              options={currencyOptions}
+              errors={errors.coin}
+              handleChange={(e) => setCoin(e.target.value)}
+            />
+          </div>
           <div className="mt-5">
             <InputText
               id="quantity"
