@@ -3,7 +3,7 @@ import config from "config";
 import { KrakenConfig } from "../types/config.js";
 import TradingModel, { TradingDocument } from "../models/tradings.js";
 import Ohlcv from "../models/ohlcv.js";
-import { add, subtract, multiply, divide } from "../libs/calculations.js";
+import { add, subtract, multiply } from "../libs/calculations.js";
 import { TRADING_CONSTANT_BUY, TRADING_CONSTANT_SELL } from "../constants/trading.js";
 
 class TradingService {
