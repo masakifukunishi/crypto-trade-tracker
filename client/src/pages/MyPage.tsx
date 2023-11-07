@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/header";
 import TradingList from "../components/trading/TradingList";
+import TradingSummary from "../components/trading/TradingSummary";
 import AddTradingModal from "../components/trading/modals/AddTrading";
 import EditTradingModal from "../components/trading/modals/EditTrading";
 import DeleteTradingModal from "../components/trading/modals/DeleteTrading";
@@ -18,6 +19,7 @@ import tradingApi from "../api/trading";
 
 const MyPage: React.FC = () => {
   const [tradings, setTradings] = useState([]);
+  const [summary, setSummary] = useState({ price: 0, holdings: 0, balance: 0, profit: 0 });
   const user = useAuth();
   const openedModal = useSelector(selectOpenedModal);
   const dispatch = useDispatch();
@@ -26,9 +28,16 @@ const MyPage: React.FC = () => {
   useFetchConfigs("kraken");
   // get all tradings
   const fetch = async () => {
-    console.log(selectedCoin);
-    const res = await tradingApi.getAll(user.token, selectedCoin);
-    setTradings(res);
+    try {
+      const [resTrading, resSummary] = await Promise.all([
+        tradingApi.getAll(user.token, selectedCoin),
+        tradingApi.getSummary(user.token, selectedCoin),
+      ]);
+      setTradings(resTrading);
+      setSummary(resSummary);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -39,7 +48,7 @@ const MyPage: React.FC = () => {
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-3">
       <Header />
-      <SelectCurrency isUseAll={true} />
+      <SelectCurrency />
       {user ? (
         <>
           <div>
@@ -53,6 +62,7 @@ const MyPage: React.FC = () => {
             </button>
           </div>
           <TradingList tradings={tradings} />
+          <TradingSummary {...summary} />
           <button onClick={logout}>Logout</button>
         </>
       ) : (

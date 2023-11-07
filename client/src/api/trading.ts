@@ -17,6 +17,9 @@ const tradingApi = {
   async getAll(token: string, selectedCoin: string) {
     return await makeAuthenticatedRequest(ENDPOINT_URL, "get", { selectedCoin }, token);
   },
+  async getSummary(token: string, selectedCoin: string) {
+    return await makeAuthenticatedRequest(`${ENDPOINT_URL}/summary`, "get", { selectedCoin }, token);
+  },
   async add(token: string, data: Trading) {
     return await makeAuthenticatedRequest(ENDPOINT_URL, "post", data, token);
   },

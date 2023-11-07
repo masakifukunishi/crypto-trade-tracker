@@ -15,6 +15,18 @@ export const getAllTrading = async (req: Request, res: Response): Promise<void> 
   }
 };
 
+export const getTradingSummary = async (req: Request, res: Response): Promise<void> => {
+  const { user } = req;
+  const userId = user?.uid;
+  const { selectedCoin } = req.query;
+  try {
+    const tradingSummary = await tradingService.getTradingSummary(userId, selectedCoin as string);
+    res.status(200).json(tradingSummary);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addTrading = async (req: Request, res: Response): Promise<void> => {
   const { coin, tradeTime, quantity, price, type } = req.body;
 
