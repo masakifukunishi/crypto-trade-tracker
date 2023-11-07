@@ -1,5 +1,5 @@
-const TRADING_CONSTANT_BUY = "1";
-const TRADING_CONSTANT_SELL = "2";
+export const TRADING_CONSTANT_BUY = 1;
+export const TRADING_CONSTANT_SELL = 2;
 
 const TRADING_CONSTANT = {
   TRADING_TYPE: {

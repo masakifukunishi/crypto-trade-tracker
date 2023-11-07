@@ -1,11 +1,19 @@
-import TradingModel, { TradingData, TradingDocument } from "../models/tradings.js";
+import config from "config";
+
+import { KrakenConfig } from "../types/config.js";
+import TradingModel, { TradingDocument } from "../models/tradings.js";
+import Ohlcv from "../models/ohlcv.js";
+import { TRADING_CONSTANT_BUY, TRADING_CONSTANT_SELL } from "../constants/trading.js";
 
 class TradingService {
+  private getDefaultCoin(): string {
+    const krakenConfig: KrakenConfig = config.get("kraken");
+    return krakenConfig.quoteAssets[0].symbol;
+  }
+
   async getAllTrading(userId: string, selectedCoin?: string): Promise<any[]> {
     let query: { userId: string; coin?: string } = { userId };
-    if (selectedCoin) {
-      query.coin = selectedCoin;
-    }
+    query.coin = selectedCoin || this.getDefaultCoin();
     const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
     const tradingWithData = allTrading.map((trading) => {
       const totalAmount = trading.price * trading.quantity;
@@ -13,6 +21,48 @@ class TradingService {
     });
     return tradingWithData;
   }
+
+  async getTradingSummary(userId: string, selectedCoin?: string): Promise<any> {
+    let query: { userId: string; coin?: string } = { userId };
+    query.coin = selectedCoin || this.getDefaultCoin();
+    const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
+    let holdings = 0;
+    allTrading.forEach((trading) => {
+      if (trading.type === TRADING_CONSTANT_BUY) {
+        holdings += trading.quantity;
+      } else if (trading.type === TRADING_CONSTANT_SELL) {
+        holdings -= trading.quantity;
+      } else {
+        throw new Error("Invalid trading type");
+      }
+    });
+    const OhlcvModel = Ohlcv(`ohlcv_${query.coin}_ZUSD`);
+    const price = await OhlcvModel.findOne({ coin: query.coin }).sort({ time: -1 });
+    let balance = 0;
+    if (price) {
+      balance = holdings * price.close;
+    }
+    let profit = 0;
+    if (allTrading.length > 0) {
+      const firstTrading = allTrading[allTrading.length - 1];
+      const lastTrading = allTrading[0];
+      const firstTradingPrice = await OhlcvModel.findOne({ time: firstTrading.tradeTime }).sort({ time: -1 });
+      const lastTradingPrice = await OhlcvModel.findOne({ time: lastTrading.tradeTime }).sort({ time: -1 });
+      if (firstTradingPrice && lastTradingPrice) {
+        const firstTradingTotalAmount = firstTradingPrice.close * firstTrading.quantity;
+        const lastTradingTotalAmount = lastTradingPrice.close * lastTrading.quantity;
+        profit = lastTradingTotalAmount - firstTradingTotalAmount;
+      }
+    }
+    const tradingSummary = {
+      price: price?.close,
+      holdings,
+      balance,
+      profit,
+    };
+    return tradingSummary;
+  }
+
   async addTrading(
     userId: string,
     coin: string,
