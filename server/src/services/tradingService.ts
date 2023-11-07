@@ -3,6 +3,7 @@ import config from "config";
 import { KrakenConfig } from "../types/config.js";
 import TradingModel, { TradingDocument } from "../models/tradings.js";
 import Ohlcv from "../models/ohlcv.js";
+import { add, subtract, multiply, divide } from "../libs/calculations.js";
 import { TRADING_CONSTANT_BUY, TRADING_CONSTANT_SELL } from "../constants/trading.js";
 
 class TradingService {
@@ -29,31 +30,31 @@ class TradingService {
     let holdings = 0;
     allTrading.forEach((trading) => {
       if (trading.type === TRADING_CONSTANT_BUY) {
-        holdings += trading.quantity;
+        holdings = add(holdings, trading.quantity);
       } else if (trading.type === TRADING_CONSTANT_SELL) {
-        holdings -= trading.quantity;
+        holdings = subtract(holdings, trading.quantity);
       } else {
         throw new Error("Invalid trading type");
       }
     });
     const OhlcvModel = Ohlcv(`ohlcv_${query.coin}_ZUSD`);
-    const price = await OhlcvModel.findOne({ coin: query.coin }).sort({ time: -1 });
+    const price = await OhlcvModel.findOne().sort({ time: -1 });
     let balance = 0;
     if (price) {
-      balance = holdings * price.close;
+      balance = multiply(holdings, 4);
     }
     let profit = 0;
-    if (allTrading.length > 0) {
-      const firstTrading = allTrading[allTrading.length - 1];
-      const lastTrading = allTrading[0];
-      const firstTradingPrice = await OhlcvModel.findOne({ time: firstTrading.tradeTime }).sort({ time: -1 });
-      const lastTradingPrice = await OhlcvModel.findOne({ time: lastTrading.tradeTime }).sort({ time: -1 });
-      if (firstTradingPrice && lastTradingPrice) {
-        const firstTradingTotalAmount = firstTradingPrice.close * firstTrading.quantity;
-        const lastTradingTotalAmount = lastTradingPrice.close * lastTrading.quantity;
-        profit = lastTradingTotalAmount - firstTradingTotalAmount;
+    allTrading.forEach((trading) => {
+      const totalAmount = multiply(trading.price, trading.quantity);
+      if (trading.type === TRADING_CONSTANT_BUY) {
+        profit = subtract(profit, totalAmount);
+      } else if (trading.type === TRADING_CONSTANT_SELL) {
+        profit = add(profit, totalAmount);
+      } else {
+        throw new Error("Invalid trading type");
       }
-    }
+    });
+    profit = add(profit, balance);
     const tradingSummary = {
       price: price?.close,
       holdings,
