@@ -12,9 +12,9 @@ class TradingService {
     return krakenConfig.quoteAssets[0].symbol;
   }
 
-  async getAllTrading(userId: string, selectedCoin?: string): Promise<any[]> {
+  async getAllTrading(userId: string, coin?: string): Promise<any[]> {
     let query: { userId: string; coin?: string } = { userId };
-    query.coin = selectedCoin || this.getDefaultCoin();
+    query.coin = coin || this.getDefaultCoin();
     const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
     const tradingWithData = allTrading.map((trading) => {
       const totalAmount = trading.price * trading.quantity;
@@ -23,9 +23,9 @@ class TradingService {
     return tradingWithData;
   }
 
-  async getTradingSummary(userId: string, selectedCoin?: string): Promise<any> {
+  async getTradingSummary(userId: string, coin?: string): Promise<any> {
     let query: { userId: string; coin?: string } = { userId };
-    query.coin = selectedCoin || this.getDefaultCoin();
+    query.coin = coin || this.getDefaultCoin();
     const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
     let holdings = 0;
     allTrading.forEach((trading) => {
