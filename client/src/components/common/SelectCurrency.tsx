@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import { selecKrakenConfig } from "../../store/slicers/config";
-import { selectSelectedCoin, setSelectedCoin } from "../../store/slicers/common";
+import { selectCoin, setCoin } from "../../store/slicers/common";
 
 type Props = {
   isUseAll?: boolean;
@@ -21,17 +21,17 @@ const SelectCurrency: React.FC<Props> = ({ isUseAll = false }) => {
   }));
 
   const dispatch = useDispatch();
-  const selectedCoin = useSelector(selectSelectedCoin);
+  const coin = useSelector(selectCoin);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    dispatch(setSelectedCoin(value));
+    dispatch(setCoin(value));
   };
 
   return (
     <>
       <select
-        value={selectedCoin}
+        value={coin}
         onChange={handleChange}
         className="border font-semibold rounded-lg block w-full px-2 py-1.5 bg-gray-700 border-gray-600 hover:border-blue-500 focus:border-blue-500 cursor-pointer"
       >

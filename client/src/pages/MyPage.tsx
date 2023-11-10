@@ -10,7 +10,7 @@ import DeleteTradingModal from "../components/trading/modals/DeleteTrading";
 import SelectCurrency from "../components/common/SelectCurrency";
 import { login, logout } from "../utils/auth";
 import { selectOpenedModal, open } from "../store/slicers/openedModal";
-import { selectSelectedCoin } from "../store/slicers/common";
+import { selectCoin } from "../store/slicers/common";
 import { ADD_TRADING, EDIT_TRADING, DELETE_TRADING } from "../consts/modal";
 import useAuth from "../hooks/useAuth";
 import useFetchConstants from "../hooks/useFetchConstants";
@@ -23,16 +23,13 @@ const MyPage: React.FC = () => {
   const user = useAuth();
   const openedModal = useSelector(selectOpenedModal);
   const dispatch = useDispatch();
-  const selectedCoin = useSelector(selectSelectedCoin);
+  const coin = useSelector(selectCoin);
   useFetchConstants("trading");
   useFetchConfigs("kraken");
   // get all tradings
   const fetch = async () => {
     try {
-      const [resTrading, resSummary] = await Promise.all([
-        tradingApi.getAll(user.token, selectedCoin),
-        tradingApi.getSummary(user.token, selectedCoin),
-      ]);
+      const [resTrading, resSummary] = await Promise.all([tradingApi.getAll(user.token, coin), tradingApi.getSummary(user.token, coin)]);
       setTradings(resTrading);
       setSummary(resSummary);
     } catch (error) {
@@ -43,7 +40,7 @@ const MyPage: React.FC = () => {
   useEffect(() => {
     if (!user) return;
     fetch();
-  }, [user, selectedCoin]);
+  }, [user, coin]);
 
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-3">

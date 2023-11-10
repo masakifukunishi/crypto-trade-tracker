@@ -2,21 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 const initialState = {
-  selectedCoin: "",
+  coin: "",
 };
 
 const commonSlice = createSlice({
   name: "common",
   initialState,
   reducers: {
-    setSelectedCoin: (state, action) => {
-      state.selectedCoin = action.payload;
+    setCoin: (state, action) => {
+      state.coin = action.payload;
     },
   },
 });
 
-export const { setSelectedCoin } = commonSlice.actions;
+export const { setCoin } = commonSlice.actions;
 
-export const selectSelectedCoin = (state: RootState) => state.common.selectedCoin;
+export const selectCoin = (state: RootState) => state.common.coin;
 
 export default commonSlice.reducer;
