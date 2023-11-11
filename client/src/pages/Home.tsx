@@ -23,7 +23,13 @@ const Home: React.FC = () => {
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-3">
       <Header />
-      Home
+      <SelectCurrency />
+      <Tab />
+      {/* This color and font designation is for tooltips */}
+      <div className="text-gray-900 text-sm">
+        <CandlestickChart data={ohlcv.ohlc} />
+        <VolumeBarChart data={ohlcv.volume} />
+      </div>
     </div>
   );
 };

@@ -7,6 +7,10 @@ const constantsApi = {
     const result = await axios.get(`${ENDPOINT_URL}/trading`);
     return result.data;
   },
+  async getChart() {
+    const result = await axios.get(`${ENDPOINT_URL}/chart`);
+    return result.data;
+  },
 };
 
 export default constantsApi;

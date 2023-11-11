@@ -29,16 +29,16 @@ const constantChartSlice = createSlice({
   name: "constant-chart",
   initialState,
   reducers: {
-    setChartConstant: (state, action) => {
+    setConstantChart: (state, action) => {
       state.CHART_CONSTANT = action.payload;
     },
-    initializeChartConstant: (state) => {
+    initializeConstantChart: (state) => {
       state.CHART_CONSTANT = initialState.CHART_CONSTANT;
     },
   },
 });
 
-export const { setChartConstant, initializeChartConstant } = constantChartSlice.actions;
+export const { setConstantChart, initializeConstantChart } = constantChartSlice.actions;
 
 export const selectChartConstant = (state: RootState) => state.constantChart.CHART_CONSTANT;
 

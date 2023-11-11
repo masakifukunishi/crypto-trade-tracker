@@ -8,7 +8,7 @@ const TabItem: React.FC<TabItemProps> = ({ onTabChange, isActive, name }) => {
   return (
     <li>
       {isActive ? (
-        <span className="inline-block p-3 text-yellow-400 bg-gray-800 rounded-t-lg cursor-pointer">{name}</span>
+        <span className="inline-block p-3 text-blue-400 bg-gray-800 rounded-t-lg cursor-pointer">{name}</span>
       ) : (
         <span
           onClick={onTabChange}
