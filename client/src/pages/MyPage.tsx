@@ -15,11 +15,9 @@ import { ADD_TRADING, EDIT_TRADING, DELETE_TRADING } from "../consts/modal";
 import useAuth from "../hooks/useAuth";
 import useFetchConstants from "../hooks/useFetchConstants";
 import useFetchConfigs from "../hooks/useFetchConfigs";
-import tradingApi from "../api/trading";
+import useFetchTrading from "../hooks/useFetchTrading";
 
 const MyPage: React.FC = () => {
-  const [tradings, setTradings] = useState([]);
-  const [summary, setSummary] = useState({ price: 0, holdings: 0, balance: 0, profit: 0 });
   const user = useAuth();
   const openedModal = useSelector(selectOpenedModal);
   const dispatch = useDispatch();
@@ -27,20 +25,7 @@ const MyPage: React.FC = () => {
   useFetchConstants("trading");
   useFetchConfigs("kraken");
   // get all tradings
-  const fetch = async () => {
-    try {
-      const [resTrading, resSummary] = await Promise.all([tradingApi.getAll(user.token, coin), tradingApi.getSummary(user.token, coin)]);
-      setTradings(resTrading);
-      setSummary(resSummary);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (!user) return;
-    fetch();
-  }, [user, coin]);
+  const { tradings, summary, fetchTrading } = useFetchTrading(user?.token, coin);
 
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-3">
@@ -67,9 +52,9 @@ const MyPage: React.FC = () => {
           <button onClick={login}>Login</button>
         </>
       )}
-      {openedModal.type === ADD_TRADING && <AddTradingModal onSubmitSuccess={fetch} />}
-      {openedModal.type === EDIT_TRADING && <EditTradingModal onSubmitSuccess={fetch} />}
-      {openedModal.type === DELETE_TRADING && <DeleteTradingModal onSubmitSuccess={fetch} />}
+      {openedModal.type === ADD_TRADING && <AddTradingModal onSubmitSuccess={fetchTrading} />}
+      {openedModal.type === EDIT_TRADING && <EditTradingModal onSubmitSuccess={fetchTrading} />}
+      {openedModal.type === DELETE_TRADING && <DeleteTradingModal onSubmitSuccess={fetchTrading} />}
     </div>
   );
 };
