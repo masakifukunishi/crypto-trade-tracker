@@ -16,16 +16,16 @@ interface DateRange {
 export default class OhlcvService {
   private krakenConfig: KrakenConfig;
   private period: string;
-  private currencyPair: string;
+  private coin: string;
 
-  constructor(period: string, currencyPair: string) {
+  constructor(period: string, coin: string) {
     this.krakenConfig = config.get("kraken");
     this.period = period || CHART_CONSTANT.CHART_PERIOD.ONE_YEAR.value;
-    this.currencyPair = currencyPair || this.getDefaultCurrencyPair();
+    this.coin = coin || this.getDefaultCoin();
   }
 
-  private getDefaultCurrencyPair(): string {
-    return `${this.krakenConfig.quoteAssets[0].symbol}_${this.krakenConfig.baseAsset.symbol}`;
+  private getDefaultCoin(): string {
+    return this.krakenConfig.quoteAssets[0].symbol;
   }
 
   async getChartData(): Promise<FormattedChartData> {
@@ -59,7 +59,7 @@ export default class OhlcvService {
   }
 
   generateCollectionName(): string {
-    return `ohlcv_${this.currencyPair}`;
+    return `ohlcv_${this.coin}`;
   }
 
   calculateDateRange(): DateRange {

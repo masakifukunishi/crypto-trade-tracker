@@ -6,8 +6,8 @@ setupAxiosInterceptors();
 const ENDPOINT_URL = "/api/ohlcv";
 
 const ohlcvApi = {
-  async get(token: string, period: string, currencyPair: string) {
-    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", { period, currencyPair }, token);
+  async get(token: string, period: string, coin: string) {
+    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", { period, coin }, token);
   },
 };
 

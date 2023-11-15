@@ -7,6 +7,7 @@ interface OhlcvData {
 }
 
 const useFetchOhlcvData = (token: string, period: string, coin: string): OhlcvData => {
+  console.log(coin);
   const [ohlcv, setOhlcv] = useState({ ohlc: [], volume: [] });
 
   useEffect(() => {
