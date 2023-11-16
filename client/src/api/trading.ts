@@ -14,11 +14,11 @@ interface Trading {
 const ENDPOINT_URL = "/api/trading";
 
 const tradingApi = {
-  async getAll(token: string, selectedCoin: string) {
-    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", { selectedCoin }, token);
+  async getAll(token: string, coin: string) {
+    return await makeAuthenticatedRequest(ENDPOINT_URL, "get", { coin }, token);
   },
-  async getSummary(token: string, selectedCoin: string) {
-    return await makeAuthenticatedRequest(`${ENDPOINT_URL}/summary`, "get", { selectedCoin }, token);
+  async getSummary(token: string, coin: string) {
+    return await makeAuthenticatedRequest(`${ENDPOINT_URL}/summary`, "get", { coin }, token);
   },
   async add(token: string, data: Trading) {
     return await makeAuthenticatedRequest(ENDPOINT_URL, "post", data, token);

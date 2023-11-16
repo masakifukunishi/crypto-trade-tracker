@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import constantsApi from "../api/constants";
 import { setConstantTrading, initializeConstantTrading } from "../store/slicers/constants/trading";
+import { setConstantChart, initializeConstantChart } from "../store/slicers/constants/chart";
 
 const useConstants = (constantType: string): void => {
   const dispatch = useDispatch();
@@ -9,9 +10,19 @@ const useConstants = (constantType: string): void => {
   useEffect(() => {
     const fetchConstants = async () => {
       try {
-        if (constantType === "trading") {
-          const _chartConstants = await constantsApi.getTrading();
-          dispatch(setConstantTrading(_chartConstants));
+        switch (constantType) {
+          case "trading":
+            const _chartConstantsTrading = await constantsApi.getTrading();
+            dispatch(setConstantTrading(_chartConstantsTrading));
+            break;
+
+          case "chart":
+            const _chartConstantsChart = await constantsApi.getChart();
+            dispatch(setConstantChart(_chartConstantsChart));
+            break;
+
+          default:
+            break;
         }
       } catch (error) {
         console.error("Error fetching constants:", error);
@@ -20,6 +31,7 @@ const useConstants = (constantType: string): void => {
     fetchConstants();
     return () => {
       dispatch(initializeConstantTrading());
+      dispatch(initializeConstantChart());
     };
   }, [dispatch, constantType]);
 
