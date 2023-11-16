@@ -2,19 +2,24 @@ import { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
 
 interface CandlestickChartProps {
-  data: {
+  ohlc: {
     x: number;
     y: number[];
   }[];
+  trades: {
+    x: number;
+    y: number;
+    type: string;
+  }[];
 }
 
-const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
+const CandlestickChart: React.FC<CandlestickChartProps> = ({ ohlc, trades }) => {
   const chartRef = useRef(null);
   useEffect(() => {
     const options = {
       series: [
         {
-          data: data,
+          data: ohlc,
         },
       ],
       plotOptions: {
@@ -71,22 +76,23 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
         },
       },
       annotations: {
-        points: [
-          {
-            x: new Date("14 Oct 2023").getTime(),
-            y: 1550,
+        points: trades.map((trade) => {
+          return {
+            x: trade.x,
+            y: trade.y,
             marker: {
-              size: 8,
+              size: 6,
+              radius: 2,
             },
             label: {
-              text: "Point Annotation",
+              text: trade.type,
               style: {
                 color: "#000",
-                fontSize: "14px",
+                fontSize: "18px",
               },
             },
-          },
-        ],
+          };
+        }),
       },
     };
     const chart = new ApexCharts(chartRef.current, options);
@@ -95,7 +101,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
     return () => {
       chart.destroy();
     };
-  }, [data]);
+  }, [ohlc, trades]);
   return <div ref={chartRef}></div>;
 };
 export default CandlestickChart;

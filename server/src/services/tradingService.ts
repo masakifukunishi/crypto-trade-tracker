@@ -37,7 +37,6 @@ class TradingService {
         throw new Error("Invalid trading type");
       }
     });
-    console.log(query);
     const OhlcvModel = Ohlcv(`ohlcv_${query.coin}`);
     const price = await OhlcvModel.findOne().sort({ time: -1 });
     let balance = 0;

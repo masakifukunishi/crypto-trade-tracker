@@ -5,7 +5,6 @@ import OhlcvService from "../services/ohlcvService.js";
 export const getOhlcv = async (req: Request, res: Response): Promise<void> => {
   const { period, coin } = req.query;
   const { user } = req;
-  console.log(user);
   const userId = user?.uid;
 
   try {
