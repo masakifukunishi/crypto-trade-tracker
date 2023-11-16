@@ -9,7 +9,7 @@ import { TRADING_CONSTANT_BUY, TRADING_CONSTANT_SELL } from "../constants/tradin
 class TradingService {
   private getDefaultCoin(): string {
     const krakenConfig: KrakenConfig = config.get("kraken");
-    return krakenConfig.quoteAssets[0].symbol;
+    return krakenConfig.quoteAssets[0].altname;
   }
 
   async getAllTrading(userId: string, coin?: string): Promise<any[]> {
@@ -37,7 +37,8 @@ class TradingService {
         throw new Error("Invalid trading type");
       }
     });
-    const OhlcvModel = Ohlcv(`ohlcv_${query.coin}_ZUSD`);
+    console.log(query);
+    const OhlcvModel = Ohlcv(`ohlcv_${query.coin}`);
     const price = await OhlcvModel.findOne().sort({ time: -1 });
     let balance = 0;
     if (price) {

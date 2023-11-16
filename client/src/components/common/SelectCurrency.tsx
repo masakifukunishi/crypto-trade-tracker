@@ -17,7 +17,7 @@ const SelectCurrency: React.FC<Props> = ({ isUseAll = false }) => {
   const quoteAssets = krakenConfig.quoteAssets;
   const currencyOptions = quoteAssets.map((quoteAsset: { symbol: string; altname: string }) => ({
     displayName: quoteAsset.altname,
-    value: quoteAsset.symbol,
+    value: quoteAsset.altname,
   }));
 
   const dispatch = useDispatch();

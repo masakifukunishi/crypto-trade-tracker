@@ -32,7 +32,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   const quoteAssets = krakenConfig.quoteAssets;
   const currencyOptions = {};
   quoteAssets.forEach((quoteAsset: { symbol: string; altname: string }) => {
-    const key = quoteAsset.symbol;
+    const key = quoteAsset.altname;
     const value = quoteAsset.altname;
     currencyOptions[key] = value;
   });

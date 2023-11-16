@@ -27,7 +27,7 @@ class KrakenOhlcv {
     this.baseAsset = baseAsset;
     this.url = `${this.krakenConfig.apiUrl}/0/public/OHLC?pair=${this.quoteAsset.symbol}${this.baseAsset.symbol}`;
     this.wsUrl = this.krakenConfig.wsUrl;
-    this.ohlcvModel = Ohlcv(`ohlcv_${this.quoteAsset.symbol}_${this.baseAsset.symbol}`);
+    this.ohlcvModel = Ohlcv(`ohlcv_${this.quoteAsset.altname}`);
   }
 
   async get(num: number): Promise<OhlcvData[]> {

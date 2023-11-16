@@ -25,7 +25,7 @@ export default class OhlcvService {
   }
 
   private getDefaultCoin(): string {
-    return this.krakenConfig.quoteAssets[0].symbol;
+    return this.krakenConfig.quoteAssets[0].altname;
   }
 
   async getChartData(): Promise<FormattedChartData> {
