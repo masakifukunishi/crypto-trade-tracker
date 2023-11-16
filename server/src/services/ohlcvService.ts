@@ -2,12 +2,16 @@ import config from "config";
 
 import { KrakenConfig } from "../types/config.js";
 import Ohlcv from "../models/ohlcv.js";
+import Trading from "../models/tradings.js";
 import CHART_CONSTANT from "../constants/chart.js";
+import TRADING_CONSTANT from "../constants/trading.js";
 
 interface FormattedChartData {
   ohlc: { x: number; y: number[] }[];
   volume: { x: number; y: number }[];
+  trades?: { x: number; y: number; type: string }[];
 }
+
 interface DateRange {
   startDate: number;
   endDate: number;
@@ -55,6 +59,29 @@ export default class OhlcvService {
       volume: formattedVolume,
     };
 
+    return formattedChartData;
+  }
+
+  async getChartDataWithTrades(userId: string): Promise<FormattedChartData> {
+    let formattedChartData = await this.getChartData();
+    const { startDate, endDate } = this.calculateDateRange();
+    const tradeRecords = await Trading.find({
+      tradeTime: { $gte: startDate, $lte: endDate },
+      userId,
+    }).sort({ targetTime: 1 });
+
+    const formattedTrades = tradeRecords.map((record) => {
+      return {
+        x: record.tradeTime,
+        y: record.price,
+        type: TRADING_CONSTANT.TRADING_TYPE[record.type as keyof typeof TRADING_CONSTANT.TRADING_TYPE],
+      };
+    });
+
+    formattedChartData = {
+      ...formattedChartData,
+      trades: formattedTrades,
+    };
     return formattedChartData;
   }
 

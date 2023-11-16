@@ -79,8 +79,11 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
               size: 8,
             },
             label: {
-              borderColor: "#fff",
               text: "Point Annotation",
+              style: {
+                color: "#000",
+                fontSize: "14px",
+              },
             },
           },
         ],
