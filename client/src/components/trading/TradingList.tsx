@@ -13,7 +13,7 @@ interface Trading {
   price: number;
   quantity: number;
   totalAmount: number;
-  type: string;
+  type: number;
   tradeTime: number;
 }
 

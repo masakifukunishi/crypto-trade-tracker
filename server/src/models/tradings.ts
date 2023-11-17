@@ -1,4 +1,5 @@
 import { Schema, model, Document, Model } from "mongoose";
+import { multiply } from "../libs/calculations.js";
 
 export interface TradingDocument extends Document {
   userId: string;
@@ -7,6 +8,7 @@ export interface TradingDocument extends Document {
   quantity: number;
   tradeTime: number;
   type: number;
+  totalAmount: number;
 }
 
 export interface TradingData {
@@ -17,6 +19,7 @@ export interface TradingData {
   quantity: number;
   tradeTime: string;
   type: number;
+  totalAmount: number;
   __v: number;
 }
 
@@ -47,6 +50,12 @@ const TradingsSchema = new Schema<TradingDocument>({
     enum: [1, 2],
   },
 });
+
+TradingsSchema.virtual("totalAmount").get(function (this: TradingDocument) {
+  return multiply(this.price, this.quantity);
+});
+
+TradingsSchema.set("toJSON", { getters: true });
 
 const TradingsModel: Model<TradingDocument> = model("tradings", TradingsSchema);
 
