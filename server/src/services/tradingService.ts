@@ -13,31 +13,17 @@ interface Summary {
   profit: number;
 }
 
-interface Trading {
-  _id: string;
-  coin: string;
-  price: number;
-  quantity: number;
-  totalAmount: number;
-  type: number;
-  tradeTime: number;
-}
-
 class TradingService {
   private getDefaultCoin(): string {
     const krakenConfig: KrakenConfig = config.get("kraken");
     return krakenConfig.quoteAssets[0].altname;
   }
 
-  async getAllTrading(userId: string, coin?: string): Promise<Trading[]> {
+  async getAllTrading(userId: string, coin?: string): Promise<TradingDocument[]> {
     const query: { userId: string; coin?: string } = { userId };
     query.coin = coin || this.getDefaultCoin();
-    const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
-    const tradingWithData = allTrading.map((trading) => {
-      const totalAmount = trading.price * trading.quantity;
-      return { ...trading.toObject(), totalAmount: totalAmount };
-    });
-    return tradingWithData;
+    const tradings = await TradingModel.find(query).sort({ tradeTime: -1 });
+    return tradings;
   }
 
   async getTradingSummary(userId: string, coin?: string): Promise<Summary> {
