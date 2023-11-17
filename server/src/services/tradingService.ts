@@ -6,14 +6,31 @@ import Ohlcv from "../models/ohlcv.js";
 import { add, subtract, multiply } from "../libs/calculations.js";
 import { TRADING_CONSTANT_BUY, TRADING_CONSTANT_SELL } from "../constants/trading.js";
 
+interface Summary {
+  price: number;
+  holdings: number;
+  balance: number;
+  profit: number;
+}
+
+interface Trading {
+  _id: string;
+  coin: string;
+  price: number;
+  quantity: number;
+  totalAmount: number;
+  type: number;
+  tradeTime: number;
+}
+
 class TradingService {
   private getDefaultCoin(): string {
     const krakenConfig: KrakenConfig = config.get("kraken");
     return krakenConfig.quoteAssets[0].altname;
   }
 
-  async getAllTrading(userId: string, coin?: string): Promise<any[]> {
-    let query: { userId: string; coin?: string } = { userId };
+  async getAllTrading(userId: string, coin?: string): Promise<Trading[]> {
+    const query: { userId: string; coin?: string } = { userId };
     query.coin = coin || this.getDefaultCoin();
     const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
     const tradingWithData = allTrading.map((trading) => {
@@ -23,8 +40,8 @@ class TradingService {
     return tradingWithData;
   }
 
-  async getTradingSummary(userId: string, coin?: string): Promise<any> {
-    let query: { userId: string; coin?: string } = { userId };
+  async getTradingSummary(userId: string, coin?: string): Promise<Summary> {
+    const query: { userId: string; coin?: string } = { userId };
     query.coin = coin || this.getDefaultCoin();
     const allTrading = await TradingModel.find(query).sort({ tradeTime: -1 });
     let holdings = 0;
@@ -40,9 +57,10 @@ class TradingService {
     const OhlcvModel = Ohlcv(`ohlcv_${query.coin}`);
     const price = await OhlcvModel.findOne().sort({ time: -1 });
     let balance = 0;
-    if (price) {
-      balance = multiply(holdings, 4);
+    if (!price) {
+      throw new Error("Price not found");
     }
+    balance = multiply(holdings, 4);
     let profit = 0;
     allTrading.forEach((trading) => {
       const totalAmount = multiply(trading.price, trading.quantity);
@@ -56,7 +74,7 @@ class TradingService {
     });
     profit = add(profit, balance);
     const tradingSummary = {
-      price: price?.close,
+      price: price.close,
       holdings,
       balance,
       profit,

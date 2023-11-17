@@ -10,15 +10,16 @@ const useConstants = (constantType: string): void => {
   useEffect(() => {
     const fetchConstants = async () => {
       try {
+        let _chartConstants;
         switch (constantType) {
           case "trading":
-            const _chartConstantsTrading = await constantsApi.getTrading();
-            dispatch(setConstantTrading(_chartConstantsTrading));
+            _chartConstants = await constantsApi.getTrading();
+            dispatch(setConstantTrading(_chartConstants));
             break;
 
           case "chart":
-            const _chartConstantsChart = await constantsApi.getChart();
-            dispatch(setConstantChart(_chartConstantsChart));
+            _chartConstants = await constantsApi.getChart();
+            dispatch(setConstantChart(_chartConstants));
             break;
 
           default:
