@@ -48,7 +48,9 @@ const MyPage: React.FC = () => {
           <div className="mt-5">
             <TradingList tradings={tradings} />
           </div>
-          <button onClick={logout}>Logout</button>
+          <button className="mt-4 bg-gray-500 rounded-lg text-sm px-2 py-1 mt-2" onClick={logout}>
+            Logout
+          </button>
         </>
       ) : (
         <>
