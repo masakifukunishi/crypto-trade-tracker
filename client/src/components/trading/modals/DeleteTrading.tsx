@@ -28,7 +28,7 @@ const DeleteTrading: React.FC<DeleteTradingProps> = ({ onSubmitSuccess }) => {
         e.target === e.currentTarget && dispatch(close());
       }}
     >
-      <div className="justify-center bg-gray-800 rounded-lg w-60 h-32 mt-48">
+      <div className="bg-gray-800 rounded-lg w-60 h-32 mt-48">
         <div className="flex items-center justify-between h-10 border-b px-3">
           <div className="font-bold">Delete Trading</div>
           <FontAwesomeIcon icon={faXmark} size="lg" className="cursor-pointer" onClick={() => dispatch(close())} />
