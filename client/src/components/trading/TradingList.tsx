@@ -32,7 +32,7 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
       <table>
         <thead>
           <tr>
-            <th className="w-20 text-left font-semibold">Coin</th>
+            <th className="w-20 text-left font-semibold">Name</th>
             <th className="w-32 text-left font-semibold">Price</th>
             <th className="w-28 text-left font-semibold">Quantity</th>
             <th className="w-32 text-left font-semibold">Total Amount</th>

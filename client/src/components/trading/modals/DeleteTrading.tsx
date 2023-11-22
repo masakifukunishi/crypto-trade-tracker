@@ -23,12 +23,12 @@ const DeleteTrading: React.FC<DeleteTradingProps> = ({ onSubmitSuccess }) => {
 
   return (
     <div
-      className="fixed top-0 left-0 w-full h-screen flex bg-modal-back justify-center overflow-hidden"
+      className="fixed top-0 left-0 w-full h-screen flex justify-center bg-modal-back overflow-hidden"
       onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.target === e.currentTarget && dispatch(close());
       }}
     >
-      <div className="w-95% max-w-sm m-auto bg-gray-800 rounded-lg">
+      <div className="justify-center bg-gray-800 rounded-lg w-60 h-32 mt-48">
         <div className="flex items-center justify-between h-10 border-b px-3">
           <div className="font-bold">Delete Trading</div>
           <FontAwesomeIcon icon={faXmark} size="lg" className="cursor-pointer" onClick={() => dispatch(close())} />
@@ -38,7 +38,7 @@ const DeleteTrading: React.FC<DeleteTradingProps> = ({ onSubmitSuccess }) => {
           <button type="button" className="rounded-md border border-gray-50 w-16 mr-2" onClick={() => dispatch(close())}>
             Cancel
           </button>
-          <button type="submit" className="bg-blue-600 rounded-md border border-blue-400 w-16" onClick={onDeleteClick}>
+          <button type="submit" className="bg-red-700 rounded-md border w-16 mr-2" onClick={onDeleteClick}>
             Delete
           </button>
         </div>

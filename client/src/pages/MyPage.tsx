@@ -54,7 +54,9 @@ const MyPage: React.FC = () => {
         </>
       ) : (
         <>
-          <button onClick={login}>Login</button>
+          <button className="mt-4 bg-gray-500 rounded-lg text-sm px-2 py-1 mt-2" onClick={login}>
+            Login
+          </button>
         </>
       )}
       {openedModal.type === ADD_TRADING && <AddTradingModal onSubmitSuccess={fetchTrading} />}
