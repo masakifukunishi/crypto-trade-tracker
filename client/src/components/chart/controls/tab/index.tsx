@@ -16,14 +16,14 @@ const Index = () => {
   return (
     <ul className="flex flex-wrap  font-medium text-center border-b border-gray-700">
       <TabItem
-        onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.ONE_YEAR.value)}
-        isActive={period === chartConstant.CHART_PERIOD.ONE_YEAR.value || !period}
-        name={chartConstant.CHART_PERIOD.ONE_YEAR.displayName}
-      />
-      <TabItem
         onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.YEAR_TO_DATE.value)}
         isActive={period === chartConstant.CHART_PERIOD.YEAR_TO_DATE.value}
         name={chartConstant.CHART_PERIOD.YEAR_TO_DATE.displayName}
+      />
+      <TabItem
+        onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.ONE_YEAR.value)}
+        isActive={period === chartConstant.CHART_PERIOD.ONE_YEAR.value || !period}
+        name={chartConstant.CHART_PERIOD.ONE_YEAR.displayName}
       />
       <TabItem
         onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.SIX_MONTHS.value)}

@@ -1,12 +1,12 @@
 const CHART_CONSTANT = {
   CHART_PERIOD: {
-    ONE_YEAR: {
-      value: "1YEAR",
-      displayName: "1 year",
-    },
     YEAR_TO_DATE: {
       value: "YTD",
       displayName: "Year to date",
+    },
+    ONE_YEAR: {
+      value: "1YEAR",
+      displayName: "1 year",
     },
     SIX_MONTHS: {
       value: "6MONTH",
