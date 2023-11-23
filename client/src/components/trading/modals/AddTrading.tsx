@@ -38,7 +38,7 @@ const AddTrading: React.FC<AddTradingProps> = ({ onSubmitSuccess }) => {
   });
 
   const handleInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: React.Dispatch<React.SetStateAction<number>>) => {
-    const value = parseInt(e.target.value);
+    const value = parseFloat(e.target.value);
     if (value >= 0) setValue(value);
   };
 

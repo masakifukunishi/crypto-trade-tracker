@@ -1,7 +1,4 @@
-import { setupAxiosInterceptors } from "./libs/axiosInterceptors";
 import { makeAuthenticatedRequest } from "./libs/requestHelper";
-
-setupAxiosInterceptors();
 
 interface Trading {
   coin: string;
