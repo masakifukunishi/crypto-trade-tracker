@@ -15,6 +15,7 @@ export const getOhlcv = async (req: Request, res: Response): Promise<void> => {
     } else {
       formattedChartData = await ohlcvServiceInstance.getChartData();
     }
+    console.log("formattedChartData", formattedChartData);
     res.json(formattedChartData);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

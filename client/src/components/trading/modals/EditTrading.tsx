@@ -56,12 +56,12 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
 
   return (
     <div
-      className="fixed top-0 left-0 w-full h-screen flex bg-modal-back justify-center overflow-hidden"
+      className="fixed top-0 left-0 w-full h-screen flex justify-center bg-modal-back overflow-hidden"
       onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.target === e.currentTarget && dispatch(close());
       }}
     >
-      <div className="w-95% max-w-sm m-auto bg-gray-800 rounded-lg">
+      <div className="bg-gray-800 rounded-lg w-80 h-4/6 mt-32 overflow-scroll">
         <div className="flex items-center justify-between h-10 border-b px-3">
           <div className="font-bold">Edit Trading</div>
           <FontAwesomeIcon icon={faXmark} size="lg" className="cursor-pointer" onClick={() => dispatch(close())} />
@@ -79,14 +79,13 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
             />
           </div>
           <div className="mt-5">
-            <InputText
-              id="quantity"
-              label="Quantity"
+            <DateTime
+              id="time"
+              label="Time"
               isRequired={true}
-              isNumber={true}
-              state={quantity}
-              errors={errors.quantity}
-              handleChange={(e) => handleInputNumberChange(e, setQuantity)}
+              state={tradeTime}
+              errors={errors.tradeTime}
+              handleChange={(value) => setTradeTime(Date.parse(value))}
             />
           </div>
           <div className="mt-5">
@@ -101,6 +100,17 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
             />
           </div>
           <div className="mt-5">
+            <InputText
+              id="quantity"
+              label="Quantity"
+              isRequired={true}
+              isNumber={true}
+              state={quantity}
+              errors={errors.quantity}
+              handleChange={(e) => handleInputNumberChange(e, setQuantity)}
+            />
+          </div>
+          <div className="mt-5">
             <SelectBox
               id="type"
               label="Trading Type"
@@ -111,17 +121,7 @@ const EditTrading: React.FC<EditTradingProps> = ({ onSubmitSuccess }) => {
               handleChange={(e) => setType(e.target.value)}
             />
           </div>
-          <div className="mt-5">
-            <DateTime
-              id="time"
-              label="Time"
-              isRequired={true}
-              state={tradeTime}
-              errors={errors.tradeTime}
-              handleChange={(value) => setTradeTime(Date.parse(value))}
-            />
-          </div>
-          <div className="flex justify-end h-8 mt-11 mb-5">
+          <div className="flex justify-end h-8 mt-6 mb-5">
             <button type="button" className="rounded-md border border-gray-50 w-16 mr-2" onClick={() => dispatch(close())}>
               Cancel
             </button>

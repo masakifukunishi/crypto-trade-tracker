@@ -46,7 +46,7 @@ class TradingService {
     if (!price) {
       throw new Error("Price not found");
     }
-    balance = multiply(holdings, 4);
+    balance = multiply(holdings, price.close);
     let profit = 0;
     allTrading.forEach((trading) => {
       const totalAmount = multiply(trading.price, trading.quantity);

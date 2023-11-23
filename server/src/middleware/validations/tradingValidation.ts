@@ -6,8 +6,8 @@ export const validateTrading = [
   body("tradeTime")
     .matches(/^\d{13}$/)
     .withMessage("Trade date must be a valid date"),
-  body("quantity").isInt({ min: 1 }).withMessage("Quantity must be a positive integer"),
-  body("price").isInt({ min: 0 }).withMessage("Price must be a non-negative number"),
+  body("quantity").isFloat({ min: 0 }).withMessage("Quantity must be a non-negative number"),
+  body("price").isFloat({ min: 0 }).withMessage("Price must be a non-negative number"),
   body("type").isInt({ min: 1, max: 2 }).withMessage("Type must be either 1 or 2"),
 
   (req: Request, res: Response, next: NextFunction): void => {

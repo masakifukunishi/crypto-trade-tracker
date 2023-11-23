@@ -21,11 +21,6 @@ const Index = () => {
         name={chartConstant.CHART_PERIOD.ONE_YEAR.displayName}
       />
       <TabItem
-        onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.YEAR_TO_DATE.value)}
-        isActive={period === chartConstant.CHART_PERIOD.YEAR_TO_DATE.value}
-        name={chartConstant.CHART_PERIOD.YEAR_TO_DATE.displayName}
-      />
-      <TabItem
         onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.SIX_MONTHS.value)}
         isActive={period === chartConstant.CHART_PERIOD.SIX_MONTHS.value}
         name={chartConstant.CHART_PERIOD.SIX_MONTHS.displayName}
@@ -34,6 +29,11 @@ const Index = () => {
         onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.ONE_MONTH.value)}
         isActive={period === chartConstant.CHART_PERIOD.ONE_MONTH.value}
         name={chartConstant.CHART_PERIOD.ONE_MONTH.displayName}
+      />
+      <TabItem
+        onTabChange={() => handleTabChange(chartConstant.CHART_PERIOD.YEAR_TO_DATE.value)}
+        isActive={period === chartConstant.CHART_PERIOD.YEAR_TO_DATE.value}
+        name={chartConstant.CHART_PERIOD.YEAR_TO_DATE.displayName}
       />
     </ul>
   );
