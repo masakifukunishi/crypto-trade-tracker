@@ -6,8 +6,12 @@ const useAuth = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        setUser(null);
+        return;
+      }
       setUser({
-        uid: user.uid,
+        uid: user.uid ?? undefined,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,

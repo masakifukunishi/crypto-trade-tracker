@@ -27,7 +27,11 @@ declare global {
 }
 
 export const firebaseAuthMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const token = req.headers.authorization?.split("Bearer ")[1];
+  let token = req.headers.authorization?.split("Bearer ")[1];
+  if (token === "undefined") {
+    token = undefined;
+  }
+
   if (!token) {
     res.status(401).json({ message: "Unauthorized" });
     return;
@@ -44,7 +48,10 @@ export const firebaseAuthMiddleware = async (req: Request, res: Response, next: 
 };
 
 export const checkTokenAndAssignUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const token = req.headers.authorization?.split("Bearer ")[1];
+  let token = req.headers.authorization?.split("Bearer ")[1];
+  if (token === "undefined") {
+    token = undefined;
+  }
   if (token) {
     try {
       const decodedToken = await admin.auth().verifyIdToken(token);

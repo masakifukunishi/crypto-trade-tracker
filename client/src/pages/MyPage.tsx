@@ -29,9 +29,10 @@ const MyPage: React.FC = () => {
   return (
     <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-3">
       <Header />
-      <SelectCurrency />
+
       {user ? (
         <>
+          <SelectCurrency />
           <div className="mt-3">
             <TradingSummary {...summary} />
           </div>
@@ -48,13 +49,13 @@ const MyPage: React.FC = () => {
           <div className="mt-5">
             <TradingList tradings={tradings} />
           </div>
-          <button className="mt-4 bg-gray-500 rounded-lg text-sm px-2 py-1 mt-2" onClick={logout}>
+          <button className="mt-4 bg-gray-500 rounded-lg text-sm px-3 py-1 mt-2" onClick={logout}>
             Logout
           </button>
         </>
       ) : (
         <>
-          <button className="mt-4 bg-gray-500 rounded-lg text-sm px-2 py-1 mt-2" onClick={login}>
+          <button className="mt-4 bg-blue-500 rounded-lg py-1 w-24" onClick={login}>
             Login
           </button>
         </>
