@@ -33,25 +33,27 @@ const MyPage: React.FC = () => {
       {user ? (
         <>
           <SelectCurrency />
-          <div className="mt-3">
-            <TradingSummary {...summary} />
-          </div>
-          <div>
-            <button
-              className="bg-blue-500 rounded-lg px-2 py-1 mt-2"
-              onClick={() => {
-                dispatch(open({ type: ADD_TRADING }));
-              }}
-            >
-              Add trading
+          <div className="mx-2">
+            <div className="mt-3">
+              <TradingSummary {...summary} />
+            </div>
+            <div>
+              <button
+                className="bg-blue-500 rounded-lg px-2 py-1 mt-2"
+                onClick={() => {
+                  dispatch(open({ type: ADD_TRADING }));
+                }}
+              >
+                Add trading
+              </button>
+            </div>
+            <div className="mt-5">
+              <TradingList tradings={tradings} />
+            </div>
+            <button className="mt-4 bg-gray-500 rounded-lg text-sm px-3 py-1 mt-6" onClick={logout}>
+              Logout
             </button>
           </div>
-          <div className="mt-5">
-            <TradingList tradings={tradings} />
-          </div>
-          <button className="mt-4 bg-gray-500 rounded-lg text-sm px-3 py-1 mt-2" onClick={logout}>
-            Logout
-          </button>
         </>
       ) : (
         <>
