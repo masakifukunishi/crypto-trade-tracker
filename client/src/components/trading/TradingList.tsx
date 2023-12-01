@@ -30,15 +30,15 @@ const TradingList: React.FC<Props> = ({ tradings }) => {
         <h2 className="text-lg font-bold">Trading List</h2>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-max">
+        <table className="min-w-max text-lg">
           <thead>
             <tr>
               <th className="w-20 text-left font-semibold">Name</th>
               <th className="w-32 text-left font-semibold">Price</th>
               <th className="w-28 text-left font-semibold">Quantity</th>
-              <th className="w-32 text-left font-semibold">Total Amount</th>
+              <th className="w-36 text-left font-semibold">Total Amount</th>
               <th className="w-20 text-left font-semibold">Type</th>
-              <th className="w-48 text-left font-semibold">Time</th>
+              <th className="w-56 text-left font-semibold">Time</th>
               <th className="w-20 text-left font-semibold">Actions</th>
             </tr>
           </thead>
