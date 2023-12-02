@@ -41,7 +41,7 @@ class TradingService {
       }
     });
     const OhlcvModel = Ohlcv(`ohlcv_${query.coin}`);
-    const price = await OhlcvModel.findOne().sort({ time: -1 });
+    const price = await OhlcvModel.findOne().sort({ targetTime: -1 });
     let balance = 0;
     if (!price) {
       throw new Error("Price not found");
