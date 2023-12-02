@@ -4,7 +4,8 @@ import { RootState } from "../store";
 export const openedModal = createSlice({
   name: "openedModal",
   initialState: {
-    modal: { type: "", param: {} },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    modal: { type: "", param: {} as any },
   },
   reducers: {
     open: (state, action) => {

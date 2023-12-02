@@ -8,12 +8,8 @@
     },
     "quoteAssets": [
       {
-        "symbol": "XETH",
-        "altname": "ETH"
-      },
-      {
-        "symbol": "XXRP",
-        "altname": "XRP"
+        "symbol": "BTC",
+        "altname": "BTC"
       }
     ],
     "dataNum": 365,
