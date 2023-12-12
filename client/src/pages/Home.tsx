@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import Header from "../components/header";
+import Logo from "../components/header/Logo";
 import useAuth from "../hooks/useAuth";
 import { login } from "../utils/auth";
 
@@ -12,11 +12,11 @@ const Home: React.FC = () => {
     return null;
   }
   return (
-    <div className="bg-gray-900 text-gray-50 min-h-screen py-1 px-5">
+    <div className="bg-gray-900 text-gray-50 min-h-screen py-4 px-5">
       <div className="max-w-3xl flex flex-col justify-center mx-auto h-full">
-        <Header />
+        <Logo />
         <div className="mt-6 px-2">
-          <h1 className="text-2xl font-bold">Manage your cryptocurrency portfolios and view insights</h1>
+          <h1 className="text-2xl font-semibold">Manage your cryptocurrency portfolios and view insights</h1>
           <h2 className="text-xl font-bold font-bold mt-6">Features</h2>
           <div className="mt-3 mb-12">
             <h3 className="text-xl font-bold">1. Candle Stick & Volume Charts</h3>

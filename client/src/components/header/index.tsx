@@ -12,11 +12,14 @@ const HeaderComponent: React.FC = () => {
   const isMyPage = location.pathname === "/my-page";
 
   return (
-    <header className="mb-2 pl-1 pt-1.5 flex items-start mt-1 flex-row items-end justify-between">
+    <header className="mb-2 pl-1 pt-1.5 flex items-start mt-1 flex-row items-top justify-between">
       <LogoComponent />
-      <div className="text-2xl">
-        <LinkItem to="/my-page" icon={faUser} isActive={isMyPage} />
-        <LinkItem to="/chart" icon={faChartColumn} isActive={isChartPage} />
+      <div className="text-right">
+        <div className="text-2xl">
+          <LinkItem to="/my-page" icon={faUser} isActive={isMyPage} />
+          <LinkItem to="/chart" icon={faChartColumn} isActive={isChartPage} />
+        </div>
+        <div className="text-sm">Base asset: USD</div>
       </div>
     </header>
   );
